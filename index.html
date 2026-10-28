@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CYBER LAB PRO</title>
+<style>
+:root {
+  --green: #00ff88;
+  --bg: #050a08;
+  --panel: #0a1510;
+  --border: #16442d;
+  --text: #c5f5d8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px Consolas, "Courier New", monospace;
+}
+button, input { font: inherit; }
+button {
+  cursor: pointer;
+  background: #0b2417;
+  color: var(--green);
+  border: 1px solid var(--border);
+  padding: 11px 14px;
+  border-radius: 5px;
+}
+button:hover, button.active {
+  background: #10452a;
+  border-color: var(--green);
+}
+header {
+  padding: 18px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 2;
+  background: #050a08;
+}
+.logo {
+  color: var(--green);
+  font-size: 21px;
+  font-weight: bold;
+  text-shadow: 0 0 12px #00ff8866;
+}
+.status { color: var(--green); font-size: 12px; }
+nav {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding: 15px 5%;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 2;
+  background: #050a08;
+}
+nav button { font-size: 12px; }
+main {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 18px 50px;
+  position: relative;
+  z-index: 1;
+}
+h1, h2, h3 { color: var(--green); }
+h1 { font-size: clamp(25px, 5vw, 44px); }
+h2 { font-size: 21px; }
+p { line-height: 1.7; }
+.muted { color: #7ea991; font-size: 13px; }
+.hero {
+  text-align: center;
+  padding: 38px 10px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #09130eeb;
+  padding: 19px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 20px #00ff8808;
+}
+.panel h3 { margin-top: 0; }
+.big { font-size: 25px; color: var(--green); }
+.view { display: none; }
+.view.active { display: block; }
+input {
+  background: #020604;
+  color: var(--green);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 12px;
+  width: 100%;
+  margin: 8px 0 12px;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.row input { flex: 1; min-width: 160px; }
+#terminal {
+  height: 270px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+  color: #9dffc0;
+  margin-bottom: 12px;
+}
+#matrix {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .15;
+  pointer-events: none;
+  z-index: 0;
+}
+.progress {
+  height: 8px;
+  background: #14251b;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.progress div {
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  transition: width .2s;
+}
+.answer {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  text-align: left;
+}
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 22px;
+  text-align: center;
+  color: #62836e;
+  font-size: 12px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<header>
+  <div class="logo">⬢ CYBER LAB PRO</div>
+  <div class="status">● LOCAL MODE</div>
+</header>
+
+<nav>
+  <button data-view="home" class="active">HOME</button>
+  <button data-view="terminal">TERMINAL</button>
+  <button data-view="lab">CYBER LAB</button>
+  <button data-view="games">GAMES</button>
+  <button data-view="password">PASSWORD LAB</button>
+  <button data-view="files">FILE CHECK</button>
+  <button data-view="network">DASHBOARD</button>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<section id="home" class="view active">
+  <div class="hero">
+    <p class="status">WELCOME TO YOUR PERSONAL CYBERSPACE</p>
+    <h1>ENTER THE CYBER WORLD</h1>
+    <p class="muted">
+      ისწავლე. გამოცადე. გამოიკვლიე.<br>
+      შენი პირადი კიბერუსაფრთხოების ლაბორატორია.
+    </p>
+    <button data-go="terminal">გახსენი ტერმინალი →</button>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>⌘ Terminal</h3>
+      <p class="muted">ბრძანებები და ტერმინალის სიმულაცია.</p>
+      <button data-go="terminal">გახსნა</button>
+    </div>
+    <div class="panel">
+      <h3>◈ Security Lab</h3>
+      <p class="muted">შეისწავლე უსაფრთხოების პრინციპები.</p>
+      <button data-go="lab">გახსნა</button>
+    </div>
+    <div class="panel">
+      <h3>⚑ Hacker Games</h3>
+      <p class="muted">გამოცანები და ლოგიკური გამოწვევები.</p>
+      <button data-go="games">თამაში</button>
+    </div>
+    <div class="panel">
+      <h3>▤ Password Lab</h3>
+      <p class="muted">შეამოწმე პაროლის სიძლიერე ლოკალურად.</p>
+      <button data-go="password">შემოწმება</button>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL -->
+<section id="terminal" class="view">
+  <h1>LOCAL TERMINAL</h1>
+  <p class="muted">ეს ტერმინალი სიმულაციაა და სისტემურ ბრძანებებს არ ასრულებს.</p>
+  <div class="panel">
+    <div id="termOutput"></div>
+    <form id="termForm" class="row">
+      <input id="termInput" placeholder="help" autocomplete="off">
+      <button>RUN</button>
+    </form>
+    <div class="row">
+      <button data-command="help">HELP</button>
+      <button data-command="date">DATE</button>
+      <button data-command="matrix">MATRIX</button>
+      <button data-command="scan">SCAN</button>
+      <button data-command="clear">CLEAR</button>
+    </div>
+  </div>
+</section>
+
+<!-- CYBER LAB -->
+<section id="lab" class="view">
+  <h1>CYBERSECURITY LAB</h1>
+  <div class="grid">
+    <div class="panel">
+      <h3>01 / ფიშინგის ამოცნობა</h3>
+      <p>შეტყობინებაში უცნობი ბმული, სასწრაფო მუქარა ან პაროლის მოთხოვნა საეჭვო ნიშანია.</p>
+      <button data-go="quiz">გაიარე ტესტი</button>
+    </div>
+    <div class="panel">
+      <h3>02 / ანგარიშის დაცვა</h3>
+      <p>გამოიყენე უნიკალური პაროლი, ორფაქტორიანი ავთენტიფიკაცია და პაროლების მენეჯერი.</p>
+    </div>
+    <div class="panel">
+      <h3>03 / უსაფრთხო ლაბორატორია</h3>
+      <p>ქსელისა და სისტემების შესწავლა დაიწყე სპეციალურად სავარჯიშოდ შექმნილ გარემოში.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>სასწავლო სავარჯიშო</h3>
+    <p>მიიღე შეტყობინება: „შენი ანგარიში დაიბლოკება! დაუყოვნებლივ შეიყვანე პაროლი უცნობ საიტზე“.</p>
+    <button onclick="showText('labResult','სწორია! არ გახსნა საეჭვო ბმული. შედი ოფიციალურ საიტზე დამოუკიდებლად და გადაამოწმე შეტყობინება.')">როგორ მოვიქცე?</button>
+    <p id="labResult" class="muted"></p>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games" class="view">
+  <h1>HACKER MINI GAMES</h1>
+  <div class="panel">
+    <h3>თამაში 01 — გამოიცანი კოდი</h3>
+    <p>იპოვე საიდუმლო რიცხვი 1-დან 20-მდე. ეს მარტივი ლოგიკური თამაშია.</p>
+    <p>მცდელობები: <span id="attempts">0</span></p>
+    <form id="guessForm" class="row">
+      <input id="guessInput" type="number" min="1" max="20" placeholder="რიცხვი 1–20" required>
+      <button>გამოცნობა</button>
+    </form>
+    <p id="guessResult" aria-live="polite"></p>
+    <button id="restartGame">ახალი თამაში</button>
+  </div>
+  <div class="panel">
+    <h3>თამაში 02 — ბინარული კოდი</h3>
+    <p>რას ნიშნავს ბინარული რიცხვი <strong>01000001</strong> ASCII კოდირებაში?</p>
+    <button class="answer" data-answer="wrong">B</button>
+    <button class="answer" data-answer="right">A</button>
+    <button class="answer" data-answer="wrong">C</button>
+    <p id="binaryResult" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- PASSWORD -->
+<section id="password" class="view">
+  <h1>PASSWORD LAB</h1>
+  <div class="panel">
+    <p>შეიყვანე სატესტო პაროლი. შეფასება ხდება შენს ბრაუზერში და ტექსტი არსად იგზავნება.</p>
+    <label for="pw">სატესტო პაროლი</label>
+    <input id="pw" type="password" autocomplete="off" placeholder="შეიყვანე სატესტო ტექსტი">
+    <button id="togglePw">ჩვენება / დამალვა</button>
+    <div class="progress"><div id="pwBar"></div></div>
+    <p id="pwScore">შეფასება: ჯერ არ შემოწმებულა</p>
+    <p class="muted">არ გამოიყენო შენი რეალური პაროლი. ეს არის მხოლოდ ზოგადი, ლოკალური შეფასება და არა გატეხვის გარანტირებული პროგნოზი.</p>
+  </div>
+  <div class="panel">
+    <h3>პაროლის დაცვის რჩევები</h3>
+    <ul>
+      <li>გამოიყენე გრძელი და უნიკალური პაროლი.</li>
+      <li>არ გამოიყენო ერთი პაროლი რამდენიმე ანგარიშზე.</li>
+      <li>ჩართე ორფაქტორიანი ავთენტიფიკაცია.</li>
+      <li>საიდუმლო პაროლები არავის გაუზიარო.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FILE CHECK -->
+<section id="files" class="view">
+  <h1>FILE SECURITY DEMO</h1>
+  <div class="panel">
+    <p>აირჩიე ფაილი. საიტი აჩვენებს მის სახელს, ტიპსა და ზომას. ფაილი სერვერზე არ იტვირთება.</p>
+    <input type="file" id="fileInput">
+    <div id="fileResult" aria-live="polite"></div>
+    <p class="muted">ფაილის სახელითა და გაფართოებით მავნე პროგრამის დადგენა შეუძლებელია. ეს ხელსაწყო ანტივირუსი არ არის.</p>
+  </div>
+</section>
+
+<!-- NETWORK DASHBOARD -->
+<section id="network" class="view">
+  <h1>CYBER DASHBOARD</h1>
+  <p class="muted">ლოკალური დემო მონაცემები — რეალური ქსელის გაზომვა არ ხდება.</p>
+  <div class="grid">
+    <div class="panel">
+      <p class="muted">LAB STATUS</p>
+      <div class="big">ONLINE</div>
+    </div>
+    <div class="panel">
+      <p class="muted">DEMO SERVICES</p>
+      <div class="big">03</div>
+    </div>
+    <div class="panel">
+      <p class="muted">SECURITY MODE</p>
+      <div class="big">LOCAL</div>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>ქსელის ვიზუალიზაცია</h3>
+    <svg viewBox="0 0 500 190" width="100%" role="img" aria-label="სასწავლო ქსელის კვანძების დიაგრამა">
+      <g stroke="#167345" stroke-width="2">
+        <line x1="250" y1="95" x2="100" y2="40"/>
+        <line x1="250" y1="95" x2="400" y2="40"/>
+        <line x1="250" y1="95" x2="100" y2="155"/>
+        <line x1="250" y1="95" x2="400" y2="155"/>
+      </g>
+      <g fill="#0b2417" stroke="#00ff88" stroke-width="2">
+        <circle cx="250" cy="95" r="28"/>
+        <circle cx="100" cy="40" r="19"/>
+        <circle cx="400" cy="40" r="19"/>
+        <circle cx="100" cy="155" r="19"/>
+        <circle cx="400" cy="155" r="19"/>
+      </g>
+      <g fill="#00ff88" font-size="12" text-anchor="middle">
+        <text x="250" y="99">LAB</text>
+        <text x="100" y="44">A</text>
+        <text x="400" y="44">B</text>
+        <text x="100" y="159">C</text>
+        <text x="400" y="159">D</text>
+      </g>
+    </svg>
+    <p class="muted">სქემა მხოლოდ საილუსტრაციოა.</p>
+    <button id="refreshDashboard">განაახლე დემო</button>
+    <p id="dashboardMessage" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="view">
+  <h1>SECURITY QUIZ</h1>
+  <div class="panel">
+    <h3>რომელია ყველაზე უსაფრთხო მოქმედება საეჭვო ელფოსტის მიღებისას?</h3>
+    <button class="answer" data-quiz="wrong">დაუყოვნებლივ გავხსნა ბმული.</button>
+    <button class="answer" data-quiz="right">გამგზავნი გადავამოწმო და ოფიციალურ საიტს დამოუკიდებლად მივმართო.</button>
+    <button class="answer" data-quiz="wrong">პასუხად ჩემი პაროლი გავაგზავნო.</button>
+    <p id="quizResult" aria-live="polite"></p>
+    <button data-go="lab">უკან ლაბორატორიაში</button>
+  </div>
+</section>
+
+</main>
+
+<footer>CYBER LAB PRO · PERSONAL LEARNING PROJECT · LOCAL DEMO</footer>
+
+<script>
+// Navigation
+function goTo(id) {
+  document.querySelectorAll(".view").forEach(v =>
+    v.classList.toggle("active", v.id === id)
+  );
+  document.querySelectorAll("nav [data-view]").forEach(b =>
+    b.classList.toggle("active", b.dataset.view === id)
+  );
+  if (id === "terminal") document.getElementById("termInput").focus();
+}
+document.querySelectorAll("[data-view]").forEach(b =>
+  b.addEventListener("click", () => goTo(b.dataset.view))
+);
+document.querySelectorAll("[data-go]").forEach(b =>
+  b.addEventListener("click", () => goTo(b.dataset.go))
+);
+
+// Terminal simulation: never executes operating system commands.
+const termOutput = document.getElementById("termOutput");
+function printTerm(text) {
+  termOutput.textContent += "\n" + text + "\n";
+  termOutput.scrollTop = termOutput.scrollHeight;
+}
+function runCommand(raw) {
+  const c = raw.trim().toLowerCase();
+  if (!c) return;
+  termOutput.textContent += "\nuser@cyberlab:~$ " + raw + "\n";
+  const commands = {
+    help: "ბრძანებები: help, date, whoami, matrix, scan, clear",
+    date: new Date().toLocaleString(),
+    whoami: "CYBER LAB USER — ლოკალური სიმულაცია",
+    matrix: "01001001 01001110 01000100 01000101 01011000",
+    scan: "დემო დასრულდა. რეალური ქსელი არ დასკანერებულა."
+  };
+  if (c === "clear") {
+    termOutput.textContent = "CYBER LAB PRO TERMINAL\n";
+  } else {
+    printTerm(commands[c] || "უცნობი ბრძანებაა. აკრიფე help.");
+  }
+}
+document.getElementById("termForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const input = document.getElementById("termInput");
+  runCommand(input.value);
+  input.value = "";
+});
+document.querySelectorAll("[data-command]").forEach(b =>
+  b.addEventListener("click", () => runCommand(b.dataset.command))
+);
+printTerm("ტერმინალი მზადაა. აკრიფე help.");
+
+// Matrix animation
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+let drops = [];
+let fontSize = 15;
+function resizeMatrix() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = innerWidth * dpr;
+  canvas.height = innerHeight * dpr;
+  canvas.style.width = innerWidth + "px";
+  canvas.style.height = innerHeight + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  drops = Array(Math.ceil(innerWidth / fontSize))
+    .fill(1);
+}
+window.addEventListener("resize", resizeMatrix);
+resizeMatrix();
+function drawMatrix() {
+  ctx.fillStyle = "rgba(5, 10, 8, 0.10)";
+  ctx.fillRect(0, 0, innerWidth, innerHeight);
+  ctx.fillStyle = "#00ff88";
+  ctx.font = fontSize + "px monospace";
+  drops.forEach((y, i) => {
+    const char = Math.random() > .5 ? "1" : "0";
+    ctx.fillText(char, i * fontSize, y * fontSize);
+    if (y * fontSize > innerHeight && Math.random() > .975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  });
+  requestAnimationFrame(drawMatrix);
+}
+drawMatrix();
+
+// Helper
+function showText(id, text) {
+  document.getElementById(id).textContent = text;
+}
+
+// Number guessing game
+let secret, tries;
+function newGame() {
+  secret = Math.floor(Math.random() * 20) + 1;
+  tries = 0;
+  document.getElementById("attempts").textContent = tries;
+  document.getElementById("guessResult").textContent = "ახალი კოდი შეიქმნა.";
+  document.getElementById("guessInput").value = "";
+}
+newGame();
+document.getElementById("guessForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const input = document.getElementById("guessInput");
+  const n = Number(input.value);
+  if (!Number.isInteger(n) || n < 1 || n > 20) return;
+  tries++;
+  document.getElementById("attempts").textContent = tries;
+  const result = document.getElementById("guessResult");
+  if (n === secret) {
+    result.textContent = "სწორია! კოდი გამოიცანი " + tries + " მცდელობაში.";
+  } else {
+    result.textContent = n < secret ? "საიდუმლო რიცხვი მეტია." : "საიდუმლო რიცხვი ნაკლებია.";
+  }
+});
+document.getElementById("restartGame").addEventListener("click", newGame);
+
+// Binary game
+document.querySelectorAll("[data-answer]").forEach(b =>
+  b.addEventListener("click", () => {
+    document.getElementById("binaryResult").textContent =
+      b.dataset.answer === "right"
+      ? "სწორია! 01000001 შეესაბამება A-ს ASCII კოდირებაში."
+      : "არასწორია. სცადე კიდევ.";
+  })
+);
+
+// Phishing quiz
+document.querySelectorAll("[data-quiz]").forEach(b =>
+  b.addEventListener("click", () => {
+    document.getElementById("quizResult").textContent =
+      b.dataset.quiz === "right"
+      ? "სწორია! შეამოწმე გამგზავნი და გამოიყენე ოფიციალური საიტი."
+      : "ეს სახიფათოა. სცადე სხვა პასუხი.";
+  })
+);
+
+// Local password estimator
+const pw = document.getElementById("pw");
+document.getElementById("togglePw").addEventListener("click", () => {
+  pw.type = pw.type === "password" ? "text" : "password";
+});
+pw.addEventListener("input", () => {
+  const s = pw.value;
+  let score = 0;
+  if (s.length >= 12) score++;
+  if (s.length >= 16) score++;
+  if (/[a-z]/.test(s) && /[A-Z]/.test(s)) score++;
+  if (/\d/.test(s)) score++;
+  if (/[^A-Za-z0-9]/.test(s)) score++;
+  const percent = s.length ? score * 20 : 0;
+  document.getElementById("pwBar").style.width = percent + "%";
+  const label = !s ? "ჯერ არ შემოწმებულა"
+    : score <= 1 ? "სუსტი — გაზარდე სიგრძე და უნიკალურობა"
+    : score <= 3 ? "საშუალო — შეიძლება გაუმჯობესება"
+    : "კარგი ნიშნები აქვს, თუმცა ეს უსაფრთხოების გარანტია არ არის";
+  document.getElementById("pwScore").textContent =
+    "შეფასება: " + label;
+});
+
+// Local file metadata only
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  const result = document.getElementById("fileResult");
+  if (!file) {
+    result.textContent = "";
+    return;
+  }
+  const size = file.size < 1024 * 1024
+    ? (file.size / 1024).toFixed(2) + " KB"
+    : (file.size / (1024 * 1024)).toFixed(2) + " MB";
+  result.textContent =
+    "სახელი: " + file.name +
+    "\nტიპი: " + (file.type || "უცნობი") +
+    "\nზომა: " + size +
+    "\nშენიშვნა: ფაილი არ ატვირთულა და მავნე პროგრამებზე არ შემოწმებულა.";
+  result.style.whiteSpace = "pre-wrap";
+});
+
+// Dashboard demo
+document.getElementById("refreshDashboard").addEventListener("click", () => {
+  document.getElementById("dashboardMessage").textContent =
+    "დემო პანელი განახლდა: " + new Date().toLocaleTimeString() +
+    ". ეს არ წარმოადგენს რეალური ქსელის მონაცემებს.";
+});
+</script>
+</body>
+</html>
