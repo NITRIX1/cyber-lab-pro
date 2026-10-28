@@ -4,571 +4,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CYBER LAB PRO</title>
+<meta name="theme-color" content="#020805">
+<title>CYBER LAB PRO — Cyber Academy</title>
 <style>
-:root {
-  --green: #00ff88;
-  --bg: #050a08;
-  --panel: #0a1510;
-  --border: #16442d;
-  --text: #c5f5d8;
+:root{
+  --green:#43ff91;--green2:#00bd68;--bg:#020805;
+  --panel:rgba(4,19,11,.94);--line:#205b39;
+  --text:#e6ffed;--muted:#9bbda6;--red:#ff7777;
 }
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font: 15px Consolas, "Courier New", monospace;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Consolas,"Courier New",monospace;
 }
-button, input { font: inherit; }
-button {
-  cursor: pointer;
-  background: #0b2417;
-  color: var(--green);
-  border: 1px solid var(--border);
-  padding: 11px 14px;
-  border-radius: 5px;
+#matrix{position:fixed;inset:0;width:100%;height:100%;z-index:-2}
+body:after{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(180deg,#02080520,#020805b8);
 }
-button:hover, button.active {
-  background: #10452a;
-  border-color: var(--green);
+header{
+ position:sticky;top:0;z-index:5;display:flex;align-items:center;
+ justify-content:space-between;gap:16px;flex-wrap:wrap;padding:15px 5%;
+ background:#020805ed;border-bottom:1px solid var(--line);
+ backdrop-filter:blur(12px)
 }
-header {
-  padding: 18px 5%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  z-index: 2;
-  background: #050a08;
+.logo{font-size:20px;font-weight:bold;color:var(--green);letter-spacing:2px}
+.logo span{color:white}
+nav{display:flex;gap:16px;flex-wrap:wrap;font-size:13px}
+a{color:var(--green);text-decoration:none}
+a:hover{color:white}
+button,input,select{font:inherit}
+button{
+ background:#082416;color:var(--green);border:1px solid var(--green);
+ padding:11px 15px;border-radius:4px;cursor:pointer;transition:.2s
 }
-.logo {
-  color: var(--green);
-  font-size: 21px;
-  font-weight: bold;
-  text-shadow: 0 0 12px #00ff8866;
-}
-.status { color: var(--green); font-size: 12px; }
-nav {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-  padding: 15px 5%;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-  z-index: 2;
-  background: #050a08;
-}
-nav button { font-size: 12px; }
-main {
-  max-width: 1100px;
-  margin: 25px auto;
-  padding: 0 18px 50px;
-  position: relative;
-  z-index: 1;
-}
-h1, h2, h3 { color: var(--green); }
-h1 { font-size: clamp(25px, 5vw, 44px); }
-h2 { font-size: 21px; }
-p { line-height: 1.7; }
-.muted { color: #7ea991; font-size: 13px; }
-.hero {
-  text-align: center;
-  padding: 38px 10px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-}
-.panel {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #09130eeb;
-  padding: 19px;
-  margin-bottom: 16px;
-  box-shadow: 0 0 20px #00ff8808;
-}
-.panel h3 { margin-top: 0; }
-.big { font-size: 25px; color: var(--green); }
-.view { display: none; }
-.view.active { display: block; }
-input {
-  background: #020604;
-  color: var(--green);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 12px;
-  width: 100%;
-  margin: 8px 0 12px;
-}
-.row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.row input { flex: 1; min-width: 160px; }
-#terminal {
-  height: 270px;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  line-height: 1.7;
-  color: #9dffc0;
-  margin-bottom: 12px;
-}
-#matrix {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: .15;
-  pointer-events: none;
-  z-index: 0;
-}
-.progress {
-  height: 8px;
-  background: #14251b;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 12px 0;
-}
-.progress div {
-  height: 100%;
-  width: 0;
-  background: var(--green);
-  transition: width .2s;
-}
-.answer {
-  display: block;
-  width: 100%;
-  margin: 8px 0;
-  text-align: left;
-}
-footer {
-  position: relative;
-  z-index: 1;
-  border-top: 1px solid var(--border);
-  padding: 22px;
-  text-align: center;
-  color: #62836e;
-  font-size: 12px;
+button:hover{background:var(--green);color:#001407;box-shadow:0 0 16px #43ff9155}
+button:disabled{opacity:.45;cursor:not-allowed}
+main{width:min(1120px,92%);margin:auto}
+.hero{text-align:center;padding:80px 10px 45px}
+.eyebrow{color:var(--green);letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(36px,8vw,76px);margin:22px 0;color:white}
+h1 span{color:var(--green);text-shadow:0 0 24px #43ff9170}
+.hero p{max-width:720px;margin:0 auto 25px;line-height:1.9;color:#c5e6cf}
+.online{color:var(--green);font-size:12px;margin-top:22px}
+.dot{display:inline-block;background:var(--green);width:8px;height:8px;
+ border-radius:50%;margin-right:8px;box-shadow:0 0 12px var(--green)}
+.section{padding:32px 0}
+.section h2{color:var(--green);font-size:24px}
+.muted{color:var(--muted);font-size:13px;line-height:1.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.panel,.card{background:var(--panel);border:1px solid var(--line);
+ border-radius:7px;padding:20px;box-shadow:0 8px 30px #0005}
+.card{display:flex;flex-direction:column;gap:12px}
+.card h3{margin:0;color:var(--green);font-size:17px}
+.card p{color:#c3ddcb;line-height:1.7;font-size:13px;flex:1}
+.icon{font-size:28px}
+.tag{font-size:11px;color:var(--green);border:1px solid var(--line);
+ padding:5px 8px;display:inline-block;width:max-content;border-radius:3px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:25px}
+.stat{background:#04160c;border:1px solid var(--line);padding:15px 5px}
+.stat strong{display:block;color:var(--green);font-size:26px}
+.stat span{font-size:11px;color:var(--muted)}
+.terminal{background:#010402;border:1px solid #277447;padding:18px;
+ border-radius:6px;line-height:1.9;min-height:180px;overflow-wrap:anywhere}
+#termInput{width:65%;background:transparent;border:0;outline:0;color:var(--green)}
+.bar{height:8px;background:#13281b;border-radius:9px;overflow:hidden}
+#progressBar{height:100%;width:0;background:var(--green);transition:.3s}
+.modal-bg{display:none;position:fixed;inset:0;background:#000d;z-index:20;
+ padding:18px;align-items:center;justify-content:center}
+.modal{width:min(620px,100%);max-height:88vh;overflow:auto;
+ background:#04130a;border:1px solid var(--green);border-radius:8px;padding:23px}
+.modal h2{color:var(--green)}
+.modal p{line-height:1.8}
+.answers{display:grid;gap:10px;margin-top:16px}
+.answers button{text-align:left;line-height:1.6}
+.feedback{margin-top:15px;background:#0a2515;border-left:3px solid var(--green);
+ padding:14px;line-height:1.7}
+footer{text-align:center;border-top:1px solid var(--line);padding:30px 10px;
+ color:var(--muted);font-size:12px;line-height:2}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+@media(max-width:600px){
+ header{padding:13px 4%}.logo{font-size:17px}nav{gap:10px;font-size:12px}
+ .hero{padding-top:52px}.stats{gap:5px}.stat strong{font-size:21px}
+ .panel,.card{padding:15px}
 }
 </style>
 </head>
 <body>
-
-<canvas id="matrix"></canvas>
+<canvas id="matrix" aria-hidden="true"></canvas>
 
 <header>
-  <div class="logo">⬢ CYBER LAB PRO</div>
-  <div class="status">● LOCAL MODE</div>
+  <div class="logo">CYBER<span>LAB</span> PRO</div>
+  <nav>
+    <a href="#academy">აკადემია</a>
+    <a href="#missions">მისიები</a>
+    <a href="#terminal">ტერმინალი</a>
+    <a href="#progress">პროგრესი</a>
+    <a href="#premium">Premium</a>
+  </nav>
+  <button onclick="showProfile()">პროფილი</button>
 </header>
 
-<nav>
-  <button data-view="home" class="active">HOME</button>
-  <button data-view="terminal">TERMINAL</button>
-  <button data-view="lab">CYBER LAB</button>
-  <button data-view="games">GAMES</button>
-  <button data-view="password">PASSWORD LAB</button>
-  <button data-view="files">FILE CHECK</button>
-  <button data-view="network">DASHBOARD</button>
-</nav>
-
 <main>
-
-<!-- HOME -->
-<section id="home" class="view active">
-  <div class="hero">
-    <p class="status">WELCOME TO YOUR PERSONAL CYBERSPACE</p>
-    <h1>ENTER THE CYBER WORLD</h1>
-    <p class="muted">
-      ისწავლე. გამოცადე. გამოიკვლიე.<br>
-      შენი პირადი კიბერუსაფრთხოების ლაბორატორია.
-    </p>
-    <button data-go="terminal">გახსენი ტერმინალი →</button>
+<section class="hero">
+  <div class="eyebrow">CYBERSECURITY • LOGIC • DIGITAL SKILLS</div>
+  <h1>ENTER THE <span>MATRIX</span></h1>
+  <p>გამოიკვლიე ციფრული სამყარო, ამოხსენი მისიები, ამოიცანი ონლაინ საფრთხეები
+  და განავითარე შენი ლოგიკური აზროვნება. შენი მისია იწყება აქ.</p>
+  <button onclick="document.querySelector('#academy').scrollIntoView({behavior:'smooth'})">
+    დაიწყე სწავლა →
+  </button>
+  <div class="online"><span class="dot"></span>სასწავლო გარემო აქტიურია</div>
+  <div class="stats">
+    <div class="stat"><strong id="score">0</strong><span>ქულა</span></div>
+    <div class="stat"><strong id="completed">0</strong><span>შესრულებული მისია</span></div>
+    <div class="stat"><strong id="badges">0</strong><span>მიღწევა</span></div>
   </div>
+</section>
 
-  <div class="grid">
-    <div class="panel">
-      <h3>⌘ Terminal</h3>
-      <p class="muted">ბრძანებები და ტერმინალის სიმულაცია.</p>
-      <button data-go="terminal">გახსნა</button>
+<section class="section" id="academy">
+  <h2>// აკადემია</h2>
+  <p class="muted">აირჩიე სასწავლო მიმართულება. დემო-ვერსიაში თითოეულ მიმართულებას სამი მისია აქვს.</p>
+  <div class="grid" id="categories"></div>
+</section>
+
+<section class="section" id="missions">
+  <h2>// მისიების ცენტრი</h2>
+  <p class="muted" id="missionIntro">აირჩიე მისია, გააანალიზე სიტუაცია და შეამოწმე შენი ცოდნა.</p>
+  <button onclick="renderMissions()">ყველა მისია</button>
+  <div class="grid" id="missionGrid" style="margin-top:15px"></div>
+</section>
+
+<section class="section" id="terminal">
+  <h2>// სასწავლო ტერმინალი</h2>
+  <p class="muted">ეს ტერმინალი მხოლოდ სასწავლო პასუხებს აჩვენებს. ის არ ასრულებს ბრძანებებს შენს კომპიუტერზე.</p>
+  <div class="terminal">
+    <div id="termOutput">
+      <div>CYBER LAB PRO [EDUCATIONAL MODE]</div>
+      <div>დაწერე <span style="color:var(--green)">help</span> დასაწყებად.</div>
     </div>
-    <div class="panel">
-      <h3>◈ Security Lab</h3>
-      <p class="muted">შეისწავლე უსაფრთხოების პრინციპები.</p>
-      <button data-go="lab">გახსნა</button>
-    </div>
-    <div class="panel">
-      <h3>⚑ Hacker Games</h3>
-      <p class="muted">გამოცანები და ლოგიკური გამოწვევები.</p>
-      <button data-go="games">თამაში</button>
-    </div>
-    <div class="panel">
-      <h3>▤ Password Lab</h3>
-      <p class="muted">შეამოწმე პაროლის სიძლიერე ლოკალურად.</p>
-      <button data-go="password">შემოწმება</button>
+    <div style="color:var(--green);margin-top:10px">
+      guest@cyberlab:~$ <input id="termInput" placeholder="help" autocomplete="off" aria-label="სასწავლო ბრძანება">
     </div>
   </div>
 </section>
 
-<!-- TERMINAL -->
-<section id="terminal" class="view">
-  <h1>LOCAL TERMINAL</h1>
-  <p class="muted">ეს ტერმინალი სიმულაციაა და სისტემურ ბრძანებებს არ ასრულებს.</p>
+<section class="section" id="progress">
+  <h2>// შენი პროგრესი</h2>
   <div class="panel">
-    <div id="termOutput"></div>
-    <form id="termForm" class="row">
-      <input id="termInput" placeholder="help" autocomplete="off">
-      <button>RUN</button>
-    </form>
-    <div class="row">
-      <button data-command="help">HELP</button>
-      <button data-command="date">DATE</button>
-      <button data-command="matrix">MATRIX</button>
-      <button data-command="scan">SCAN</button>
-      <button data-command="clear">CLEAR</button>
-    </div>
+    <p>მისიების შესრულება</p>
+    <div class="bar"><div id="progressBar"></div></div>
+    <p class="muted" id="progressText">ჯერ არ შეგისრულებია მისია.</p>
+    <p class="muted">პროგრესი ინახება ამ ბრაუზერში. სხვა მოწყობილობაზე ავტომატურად არ სინქრონიზდება.</p>
+    <button onclick="resetProgress()">პროგრესის განულება</button>
   </div>
 </section>
 
-<!-- CYBER LAB -->
-<section id="lab" class="view">
-  <h1>CYBERSECURITY LAB</h1>
-  <div class="grid">
-    <div class="panel">
-      <h3>01 / ფიშინგის ამოცნობა</h3>
-      <p>შეტყობინებაში უცნობი ბმული, სასწრაფო მუქარა ან პაროლის მოთხოვნა საეჭვო ნიშანია.</p>
-      <button data-go="quiz">გაიარე ტესტი</button>
-    </div>
-    <div class="panel">
-      <h3>02 / ანგარიშის დაცვა</h3>
-      <p>გამოიყენე უნიკალური პაროლი, ორფაქტორიანი ავთენტიფიკაცია და პაროლების მენეჯერი.</p>
-    </div>
-    <div class="panel">
-      <h3>03 / უსაფრთხო ლაბორატორია</h3>
-      <p>ქსელისა და სისტემების შესწავლა დაიწყე სპეციალურად სავარჯიშოდ შექმნილ გარემოში.</p>
-    </div>
-  </div>
+<section class="section" id="premium">
+  <h2>// CYBER LAB PRO PREMIUM</h2>
   <div class="panel">
-    <h3>სასწავლო სავარჯიშო</h3>
-    <p>მიიღე შეტყობინება: „შენი ანგარიში დაიბლოკება! დაუყოვნებლივ შეიყვანე პაროლი უცნობ საიტზე“.</p>
-    <button onclick="showText('labResult','სწორია! არ გახსნა საეჭვო ბმული. შედი ოფიციალურ საიტზე დამოუკიდებლად და გადაამოწმე შეტყობინება.')">როგორ მოვიქცე?</button>
-    <p id="labResult" class="muted"></p>
-  </div>
-</section>
-
-<!-- GAMES -->
-<section id="games" class="view">
-  <h1>HACKER MINI GAMES</h1>
-  <div class="panel">
-    <h3>თამაში 01 — გამოიცანი კოდი</h3>
-    <p>იპოვე საიდუმლო რიცხვი 1-დან 20-მდე. ეს მარტივი ლოგიკური თამაშია.</p>
-    <p>მცდელობები: <span id="attempts">0</span></p>
-    <form id="guessForm" class="row">
-      <input id="guessInput" type="number" min="1" max="20" placeholder="რიცხვი 1–20" required>
-      <button>გამოცნობა</button>
-    </form>
-    <p id="guessResult" aria-live="polite"></p>
-    <button id="restartGame">ახალი თამაში</button>
-  </div>
-  <div class="panel">
-    <h3>თამაში 02 — ბინარული კოდი</h3>
-    <p>რას ნიშნავს ბინარული რიცხვი <strong>01000001</strong> ASCII კოდირებაში?</p>
-    <button class="answer" data-answer="wrong">B</button>
-    <button class="answer" data-answer="right">A</button>
-    <button class="answer" data-answer="wrong">C</button>
-    <p id="binaryResult" aria-live="polite"></p>
-  </div>
-</section>
-
-<!-- PASSWORD -->
-<section id="password" class="view">
-  <h1>PASSWORD LAB</h1>
-  <div class="panel">
-    <p>შეიყვანე სატესტო პაროლი. შეფასება ხდება შენს ბრაუზერში და ტექსტი არსად იგზავნება.</p>
-    <label for="pw">სატესტო პაროლი</label>
-    <input id="pw" type="password" autocomplete="off" placeholder="შეიყვანე სატესტო ტექსტი">
-    <button id="togglePw">ჩვენება / დამალვა</button>
-    <div class="progress"><div id="pwBar"></div></div>
-    <p id="pwScore">შეფასება: ჯერ არ შემოწმებულა</p>
-    <p class="muted">არ გამოიყენო შენი რეალური პაროლი. ეს არის მხოლოდ ზოგადი, ლოკალური შეფასება და არა გატეხვის გარანტირებული პროგნოზი.</p>
-  </div>
-  <div class="panel">
-    <h3>პაროლის დაცვის რჩევები</h3>
-    <ul>
-      <li>გამოიყენე გრძელი და უნიკალური პაროლი.</li>
-      <li>არ გამოიყენო ერთი პაროლი რამდენიმე ანგარიშზე.</li>
-      <li>ჩართე ორფაქტორიანი ავთენტიფიკაცია.</li>
-      <li>საიდუმლო პაროლები არავის გაუზიარო.</li>
+    <span class="tag">PREMIUM MEMBERSHIP</span>
+    <h3 style="font-size:32px;color:var(--green);margin-bottom:4px">59.99 ₾ <span style="font-size:14px">/ თვე</span></h3>
+    <p class="muted">Premium-ის დაგეგმილი შესაძლებლობები:</p>
+    <ul class="muted" style="line-height:2">
+      <li>ყველა გამოქვეყნებულ მისიაზე წვდომა</li>
+      <li>გაფართოებული ლოგიკური და კიბერუსაფრთხოების გამოწვევები</li>
+      <li>დონეები, მიღწევები და სასწავლო პროგრესი</li>
+      <li>ახალი აქტივობები მათი დამატებისთანავე</li>
     </ul>
+    <button onclick="showPremium()">Premium-ის შესახებ</button>
+    <p class="muted">ეს სატესტო გვერდია. გადახდა, გამოწერა და ფასიანი წვდომის კონტროლი ჯერ არ მუშაობს.</p>
   </div>
 </section>
-
-<!-- FILE CHECK -->
-<section id="files" class="view">
-  <h1>FILE SECURITY DEMO</h1>
-  <div class="panel">
-    <p>აირჩიე ფაილი. საიტი აჩვენებს მის სახელს, ტიპსა და ზომას. ფაილი სერვერზე არ იტვირთება.</p>
-    <input type="file" id="fileInput">
-    <div id="fileResult" aria-live="polite"></div>
-    <p class="muted">ფაილის სახელითა და გაფართოებით მავნე პროგრამის დადგენა შეუძლებელია. ეს ხელსაწყო ანტივირუსი არ არის.</p>
-  </div>
-</section>
-
-<!-- NETWORK DASHBOARD -->
-<section id="network" class="view">
-  <h1>CYBER DASHBOARD</h1>
-  <p class="muted">ლოკალური დემო მონაცემები — რეალური ქსელის გაზომვა არ ხდება.</p>
-  <div class="grid">
-    <div class="panel">
-      <p class="muted">LAB STATUS</p>
-      <div class="big">ONLINE</div>
-    </div>
-    <div class="panel">
-      <p class="muted">DEMO SERVICES</p>
-      <div class="big">03</div>
-    </div>
-    <div class="panel">
-      <p class="muted">SECURITY MODE</p>
-      <div class="big">LOCAL</div>
-    </div>
-  </div>
-  <div class="panel">
-    <h3>ქსელის ვიზუალიზაცია</h3>
-    <svg viewBox="0 0 500 190" width="100%" role="img" aria-label="სასწავლო ქსელის კვანძების დიაგრამა">
-      <g stroke="#167345" stroke-width="2">
-        <line x1="250" y1="95" x2="100" y2="40"/>
-        <line x1="250" y1="95" x2="400" y2="40"/>
-        <line x1="250" y1="95" x2="100" y2="155"/>
-        <line x1="250" y1="95" x2="400" y2="155"/>
-      </g>
-      <g fill="#0b2417" stroke="#00ff88" stroke-width="2">
-        <circle cx="250" cy="95" r="28"/>
-        <circle cx="100" cy="40" r="19"/>
-        <circle cx="400" cy="40" r="19"/>
-        <circle cx="100" cy="155" r="19"/>
-        <circle cx="400" cy="155" r="19"/>
-      </g>
-      <g fill="#00ff88" font-size="12" text-anchor="middle">
-        <text x="250" y="99">LAB</text>
-        <text x="100" y="44">A</text>
-        <text x="400" y="44">B</text>
-        <text x="100" y="159">C</text>
-        <text x="400" y="159">D</text>
-      </g>
-    </svg>
-    <p class="muted">სქემა მხოლოდ საილუსტრაციოა.</p>
-    <button id="refreshDashboard">განაახლე დემო</button>
-    <p id="dashboardMessage" aria-live="polite"></p>
-  </div>
-</section>
-
-<!-- QUIZ -->
-<section id="quiz" class="view">
-  <h1>SECURITY QUIZ</h1>
-  <div class="panel">
-    <h3>რომელია ყველაზე უსაფრთხო მოქმედება საეჭვო ელფოსტის მიღებისას?</h3>
-    <button class="answer" data-quiz="wrong">დაუყოვნებლივ გავხსნა ბმული.</button>
-    <button class="answer" data-quiz="right">გამგზავნი გადავამოწმო და ოფიციალურ საიტს დამოუკიდებლად მივმართო.</button>
-    <button class="answer" data-quiz="wrong">პასუხად ჩემი პაროლი გავაგზავნო.</button>
-    <p id="quizResult" aria-live="polite"></p>
-    <button data-go="lab">უკან ლაბორატორიაში</button>
-  </div>
-</section>
-
 </main>
 
-<footer>CYBER LAB PRO · PERSONAL LEARNING PROJECT · LOCAL DEMO</footer>
+<footer>
+  CYBER LAB PRO © 2026<br>
+  ისწავლე • იფიქრე • დაიცავი თავი<br>
+  სასწავლო პროექტი — გამოიყენე ცოდნა პასუხისმგებლობით.
+</footer>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button style="float:right" onclick="closeModal()">დახურვა ✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
 
 <script>
-// Navigation
-function goTo(id) {
-  document.querySelectorAll(".view").forEach(v =>
-    v.classList.toggle("active", v.id === id)
-  );
-  document.querySelectorAll("nav [data-view]").forEach(b =>
-    b.classList.toggle("active", b.dataset.view === id)
-  );
-  if (id === "terminal") document.getElementById("termInput").focus();
+// MATRIX ANIMATION
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+let drops=[],font=19;
+function resize(){
+ canvas.width=innerWidth;canvas.height=innerHeight;
+ font=innerWidth<600?15:19;
+ drops=Array(Math.ceil(canvas.width/font)).fill(0).map(()=>Math.random()*-60);
 }
-document.querySelectorAll("[data-view]").forEach(b =>
-  b.addEventListener("click", () => goTo(b.dataset.view))
-);
-document.querySelectorAll("[data-go]").forEach(b =>
-  b.addEventListener("click", () => goTo(b.dataset.go))
-);
+function matrix(){
+ ctx.fillStyle="rgba(0,5,2,.12)";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.font="bold "+font+"px monospace";
+ for(let i=0;i<drops.length;i++){
+  let digit=Math.random()>.5?"1":"0";
+  let y=drops[i]*font;
+  ctx.fillStyle=Math.random()>.96?"#eaffef":Math.random()>.45?"#43ff91":"#07974e";
+  ctx.fillText(digit,i*font,y);
+  if(y>canvas.height&&Math.random()>.975)drops[i]=0;
+  drops[i]+=.5+Math.random()*.7;
+ }
+ requestAnimationFrame(matrix);
+}
+addEventListener("resize",resize);resize();matrix();
 
-// Terminal simulation: never executes operating system commands.
-const termOutput = document.getElementById("termOutput");
-function printTerm(text) {
-  termOutput.textContent += "\n" + text + "\n";
-  termOutput.scrollTop = termOutput.scrollHeight;
+// DEMO CONTENT
+const categories=[
+ {id:"security",icon:"🛡️",name:"კიბერუსაფრთხოება",desc:"პაროლები, ფიშინგი და უსაფრთხო ონლაინ ჩვევები."},
+ {id:"logic",icon:"🧩",name:"ლოგიკა და თავსატეხები",desc:"მინიშნებები, ნიმუშები და ანალიტიკური აზროვნება."},
+ {id:"coding",icon:"⌨️",name:"კოდი და ტერმინალი",desc:"პროგრამირების საფუძვლები და სასწავლო ბრძანებები."},
+ {id:"network",icon:"🌐",name:"ქსელები და ციფრული კვალი",desc:"კავშირები, მონაცემები და პირადი ინფორმაციის დაცვა."},
+ {id:"missions",icon:"🕵️",name:"სიუჟეტური მისიები",desc:"გამოიძიე შემთხვევები და იპოვე უსაფრთხო გამოსავალი."}
+];
+
+const activities=[
+{id:"s1",cat:"security",title:"საეჭვო შეტყობინება",icon:"📩",story:"შეტყობინება გეუბნება, რომ ანგარიში დაიბლოკება, თუ დაუყოვნებლივ არ გახსნი ბმულს და პაროლს არ შეიყვან. რას აკეთებ?",opts:["ვხსნი ბმულს","არ ვხსნი ბმულს და ოფიციალური არხით ვამოწმებ","პაროლს გამგზავნს ვუგზავნი"],correct:1,why:"გადაუდებელი მოთხოვნა და პაროლის მოთხოვნა ფიშინგის ნიშნებია. შედი ოფიციალურ აპში ან საიტზე დამოუკიდებლად."},
+{id:"s2",cat:"security",title:"ანგარიშის დაცვა",icon:"🔐",story:"როგორ გააძლიერებ შენს ანგარიშს?",opts:["ყველგან ერთ პაროლს გამოვიყენებ","გრძელ, უნიკალურ პაროლს და მრავალფაქტორიან დაცვას ჩავრთავ","პაროლს მეგობარს გავუზიარებ"],correct:1,why:"უნიკალური პაროლი და მრავალფაქტორიანი ავთენტიფიკაცია ანგარიშის დაცვას აძლიერებს."},
+{id:"s3",cat:"security",title:"საჯარო Wi-Fi",icon:"📶",story:"კაფეში უცნობი Wi-Fi ქსელი ჩანს. რა არის უსაფრთხო არჩევანი?",opts:["ნებისმიერ ქსელს დავუკავშირდები","ქსელის სახელს თანამშრომელთან გადავამოწმებ და მგრძნობიარე მოქმედებებს მოვერიდები","პაროლებს შევიყვან შესამოწმებლად"],correct:1,why:"ყალბი Wi-Fi ქსელი მონაცემების მოპარვისთვის შეიძლება გამოიყენონ."},
+{id:"l1",cat:"logic",title:"ლოგიკური მიმდევრობა",icon:"🔎",story:"მიმდევრობაა 2, 4, 8, 16, __. რომელი რიცხვი მოდის შემდეგ?",opts:["18","24","32"],correct:2,why:"ყოველი შემდეგი რიცხვი წინა რიცხვის გაორმაგებით მიიღება."},
+{id:"l2",cat:"logic",title:"სამი პირობა",icon:"🧠",story:"კოდი ლუწია, 10-ზე მეტია და 15-ზე ნაკლებია. რომელი შეესაბამება?",opts:["12","15","9"],correct:0,why:"12 ლუწია, 10-ზე მეტია და 15-ზე ნაკლები."},
+{id:"l3",cat:"logic",title:"სარეზერვო ასლი",icon:"📁",story:"ორიგინალი ფაილი და სარეზერვო ასლი ერთ მოწყობილობაზეა. რა რისკია?",opts:["რისკი საერთოდ არ არსებობს","მოწყობილობის დაკარგვამ ორივე ასლი შეიძლება დააზიანოს","სარეზერვო ასლი არასდროს გვჭირდება"],correct:1,why:"სარეზერვო ასლები ცალკე, უსაფრთხო ადგილასაც უნდა ინახებოდეს."},
+{id:"c1",cat:"coding",title:"სასწავლო ბრძანება",icon:"⌨️",story:"ტერმინალში გინდა ხელმისაწვდომი ბრძანებების ნახვა. რას სცდი?",opts:["help","steal","destroy"],correct:0,why:"help ხშირად ხელმისაწვდომი ბრძანებების ჩამონათვალს აჩვენებს."},
+{id:"c2",cat:"coding",title:"პირობის შემოწმება",icon:"💻",story:"პროგრამამ „კი“ უნდა აჩვენოს, თუ ქულა 50 ან მეტია. რომელი პირობაა სწორი?",opts:["score < 50","score >= 50","score == 0"],correct:1,why:">= ნიშნავს მეტია ან ტოლია."},
+{id:"c3",cat:"coding",title:"შეცდომის პოვნა",icon:"🐛",story:"პროგრამა არ მუშაობს. რა არის კარგი პირველი ნაბიჯი?",opts:["ყველაფერი წავშალო","შეცდომის შეტყობინება და შესაბამისი კოდი შევამოწმო","შემთხვევითი კოდი დავამატო"],correct:1,why:"შეცდომის შეტყობინება ხშირად პრობლემის მიზეზის პოვნაში გვეხმარება."},
+{id:"n1",cat:"network",title:"ციფრული კვალი",icon:"👣",story:"საიტი გთხოვს პირად მონაცემებს, რომლებიც მომსახურებისთვის საჭირო არ ჩანს. რას იზამ?",opts:["ყველაფერს შევავსებ","შევამოწმებ, რატომ სჭირდება ეს ინფორმაცია და ზედმეტს არ გავაზიარებ","მონაცემებს საჯაროდ გამოვაქვეყნებ"],correct:1,why:"გააზიარე მხოლოდ აუცილებელი ინფორმაცია და გადაამოწმე საიტის სანდოობა."},
+{id:"n2",cat:"network",title:"HTTPS",icon:"🌐",story:"საიტის მისამართი HTTPS-ით იწყება. რას ნიშნავს ეს?",opts:["საიტი აუცილებლად სანდოა","კავშირი დაშიფრულია, მაგრამ საიტის პატიოსნება გარანტირებული არაა","საიტზე საფრთხე შეუძლებელია"],correct:1,why:"თაღლითურ საიტსაც შეიძლება ჰქონდეს HTTPS. შეამოწმე დომენი და გამგზავნი."},
+{id:"n3",cat:"network",title:"ფაილის გაზიარება",icon:"📂",story:"გუნდს ფაილი უნდა გაუზიარო. რომელი არჩევანია უსაფრთხო?",opts:["ბმულს ყველასთვის საჯაროს გავხდი","წვდომას მხოლოდ საჭირო ადამიანებს მივცემ","პაროლს საჯარო ბმულში ჩავწერ"],correct:1,why:"წვდომა მხოლოდ საჭირო ადამიანებს მიანიჭე."},
+{id:"m1",cat:"missions",title:"გატეხილი ანგარიში",icon:"🕵️",story:"ანგარიშზე უცნობი შესვლა შენიშნე. რა უნდა გააკეთო სანდო მოწყობილობიდან?",opts:["უგულებელვყო","შევცვალო პაროლი, დავასრულო უცნობი სესიები და ჩავრთო დამატებითი დაცვა","იგივე პაროლი სხვაგანაც გამოვიყენო"],correct:1,why:"პაროლის შეცვლა, უცნობი სესიების დახურვა და დამატებითი დაცვა რეაგირების მნიშვნელოვანი ნაბიჯებია."},
+{id:"m2",cat:"missions",title:"უცნობი USB",icon:"💾",story:"იპოვე უცნობი USB მოწყობილობა. რა არის უსაფრთხო არჩევანი?",opts:["კომპიუტერში შევაერთო","არ შევაერთო და პასუხისმგებელ პირს გადავცე","ფაილები ყველას გავუგზავნო"],correct:1,why:"უცნობ USB მოწყობილობას შეიძლება მავნე პროგრამა ჰქონდეს."},
+{id:"m3",cat:"missions",title:"ფიშინგის გამოძიება",icon:"🧪",story:"ელფოსტა გპირდება პრიზს და გთხოვს პაროლს უცნაური ბმულის საშუალებით. რა არის ყველაზე საეჭვო?",opts:["მოულოდნელი პრიზი და პაროლის მოთხოვნა","ტექსტის არსებობა","შეტყობინების დრო"],correct:0,why:"მოულოდნელი პრიზი, პაროლის მოთხოვნა და უცნაური ბმული ფიშინგის ნიშნებია."}
+];
+
+// LOCAL DEMO PROGRESS
+let state={score:0,done:[],badges:[]};
+try{
+ const saved=JSON.parse(localStorage.getItem("cyberlab_progress")||"null");
+ if(saved&&Number.isFinite(saved.score)&&Array.isArray(saved.done)&&Array.isArray(saved.badges))state=saved;
+}catch(e){}
+function save(){
+ try{localStorage.setItem("cyberlab_progress",JSON.stringify(state))}catch(e){}
+ updateStats();
 }
-function runCommand(raw) {
-  const c = raw.trim().toLowerCase();
-  if (!c) return;
-  termOutput.textContent += "\nuser@cyberlab:~$ " + raw + "\n";
-  const commands = {
-    help: "ბრძანებები: help, date, whoami, matrix, scan, clear",
-    date: new Date().toLocaleString(),
-    whoami: "CYBER LAB USER — ლოკალური სიმულაცია",
-    matrix: "01001001 01001110 01000100 01000101 01011000",
-    scan: "დემო დასრულდა. რეალური ქსელი არ დასკანერებულა."
-  };
-  if (c === "clear") {
-    termOutput.textContent = "CYBER LAB PRO TERMINAL\n";
-  } else {
-    printTerm(commands[c] || "უცნობი ბრძანებაა. აკრიფე help.");
-  }
+function updateStats(){
+ document.getElementById("score").textContent=state.score;
+ document.getElementById("completed").textContent=state.done.length;
+ document.getElementById("badges").textContent=state.badges.length;
+ let pct=Math.round(state.done.length/activities.length*100);
+ document.getElementById("progressBar").style.width=pct+"%";
+ document.getElementById("progressText").textContent=
+  `შესრულებულია ${state.done.length} / ${activities.length} მისია — ${pct}%.`;
 }
-document.getElementById("termForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const input = document.getElementById("termInput");
-  runCommand(input.value);
-  input.value = "";
+function renderCategories(){
+ document.getElementById("categories").innerHTML=categories.map(c=>{
+  let list=activities.filter(a=>a.cat===c.id);
+  let finished=list.filter(a=>state.done.includes(a.id)).length;
+  return `<article class="card">
+   <div class="icon">${c.icon}</div><h3>${c.name}</h3>
+   <p>${c.desc}</p><span class="tag">${finished}/${list.length} შესრულებულია</span>
+   <button onclick="filterMissions('${c.id}')">მისიების ნახვა →</button>
+  </article>`;
+ }).join("");
+}
+function renderMissions(filter=null){
+ const list=filter?activities.filter(a=>a.cat===filter):activities;
+ document.getElementById("missionGrid").innerHTML=list.map(a=>{
+  const done=state.done.includes(a.id);
+  return `<article class="card">
+   <div class="icon">${a.icon}</div><h3>${a.title}</h3><p>${a.story}</p>
+   <span class="tag">${done?"✓ შესრულებულია":"სასწავლო მისია"}</span>
+   <button ${done?"disabled":""} onclick="startMission('${a.id}')">${done?"დასრულებულია":"დაწყება →"}</button>
+  </article>`;
+ }).join("");
+}
+function filterMissions(id){
+ renderMissions(id);
+ document.getElementById("missionIntro").textContent=
+  categories.find(c=>c.id===id).name+" — აირჩიე მისია.";
+ document.getElementById("missions").scrollIntoView({behavior:"smooth"});
+}
+function renderAll(){renderCategories();renderMissions();updateStats()}
+function startMission(id){
+ const a=activities.find(x=>x.id===id);
+ if(!a||state.done.includes(id))return;
+ document.getElementById("modalContent").innerHTML=`
+  <span class="tag">MISSION IN PROGRESS</span>
+  <h2 id="modalTitle">${a.icon} ${a.title}</h2>
+  <p>${a.story}</p>
+  <div class="answers">${a.opts.map((o,i)=>
+   `<button onclick="answerMission('${a.id}',${i})">${["A","B","C"][i]}. ${o}</button>`
+  ).join("")}</div><div id="feedback"></div>`;
+ openModal();
+}
+function answerMission(id,choice){
+ const a=activities.find(x=>x.id===id);
+ if(!a||state.done.includes(id))return;
+ const ok=choice===a.correct;
+ if(ok){
+  state.done.push(id);state.score+=10;
+  if(state.done.length>=3&&!state.badges.includes("starter"))state.badges.push("starter");
+  if(state.done.length===activities.length&&!state.badges.includes("master"))state.badges.push("master");
+  save();
+ }
+ document.getElementById("feedback").innerHTML=`
+  <div class="feedback"><strong>${ok?"✓ სწორია! +10 ქულა":"ჯერ არა — სცადე კიდევ."}</strong>
+  <p>${a.why}</p>
+  ${ok?'<button onclick="closeModal();renderAll()">გაგრძელება →</button>':
+  `<button onclick="startMission('${a.id}')">ხელახლა ცდა</button>`}</div>`;
+}
+function openModal(){document.getElementById("modalBg").style.display="flex"}
+function closeModal(){document.getElementById("modalBg").style.display="none"}
+document.getElementById("modalBg").addEventListener("click",e=>{
+ if(e.target.id==="modalBg")closeModal();
 });
-document.querySelectorAll("[data-command]").forEach(b =>
-  b.addEventListener("click", () => runCommand(b.dataset.command))
-);
-printTerm("ტერმინალი მზადაა. აკრიფე help.");
-
-// Matrix animation
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-let drops = [];
-let fontSize = 15;
-function resizeMatrix() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = innerWidth * dpr;
-  canvas.height = innerHeight * dpr;
-  canvas.style.width = innerWidth + "px";
-  canvas.style.height = innerHeight + "px";
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  drops = Array(Math.ceil(innerWidth / fontSize))
-    .fill(1);
+function showProfile(){
+ document.getElementById("modalContent").innerHTML=`
+  <h2 id="modalTitle">ჩემი პროფილი</h2>
+  <p>ეს არის ლოკალური დემო-პროფილი. ნამდვილ ანგარიშზე შესვლა ჯერ არ არის ჩართული.</p>
+  <p>ქულები: <strong>${state.score}</strong><br>შესრულებული მისიები: <strong>${state.done.length}</strong></p>
+  <p>მიღწევები: ${state.badges.length?state.badges.map(b=>b==="starter"?"პირველი 3 მისია":"ყველა მისია").join(", "):"ჯერ არ გაქვს მიღწევა."}</p>
+  <p class="muted">პროგრესი ამ ბრაუზერში ინახება. ის არ არის დაკავშირებული მომხმარებლის ონლაინ ანგარიშთან.</p>`;
+ openModal();
 }
-window.addEventListener("resize", resizeMatrix);
-resizeMatrix();
-function drawMatrix() {
-  ctx.fillStyle = "rgba(5, 10, 8, 0.10)";
-  ctx.fillRect(0, 0, innerWidth, innerHeight);
-  ctx.fillStyle = "#00ff88";
-  ctx.font = fontSize + "px monospace";
-  drops.forEach((y, i) => {
-    const char = Math.random() > .5 ? "1" : "0";
-    ctx.fillText(char, i * fontSize, y * fontSize);
-    if (y * fontSize > innerHeight && Math.random() > .975) {
-      drops[i] = 0;
-    }
-    drops[i]++;
-  });
-  requestAnimationFrame(drawMatrix);
+function showPremium(){
+ document.getElementById("modalContent").innerHTML=`
+  <h2 id="modalTitle">CYBER LAB PRO PREMIUM</h2>
+  <h3 style="color:var(--green)">59.99 ₾ / თვე</h3>
+  <p>ეს არის დაგეგმილი გამოწერის ფასი. გამოწერა და გადახდა ამ ვერსიაში ჯერ არ მუშაობს.</p>
+  <p>რეალური გაშვებისთვის საჭიროა უსაფრთხო ავტორიზაცია, სერვერი, გამოწერის მართვა და გადახდის პროვაიდერი.</p>
+  <p class="muted">არ შეიყვანო ბარათის მონაცემები — გადახდის ფორმა არ არსებობს.</p>`;
+ openModal();
 }
-drawMatrix();
-
-// Helper
-function showText(id, text) {
-  document.getElementById(id).textContent = text;
+function resetProgress(){
+ if(!confirm("ნამდვილად გსურს პროგრესის განულება?"))return;
+ state={score:0,done:[],badges:[]};save();renderAll();
 }
 
-// Number guessing game
-let secret, tries;
-function newGame() {
-  secret = Math.floor(Math.random() * 20) + 1;
-  tries = 0;
-  document.getElementById("attempts").textContent = tries;
-  document.getElementById("guessResult").textContent = "ახალი კოდი შეიქმნა.";
-  document.getElementById("guessInput").value = "";
+// SAFE SIMULATED TERMINAL
+const termInput=document.getElementById("termInput");
+const termOutput=document.getElementById("termOutput");
+function runCommand(raw){
+ const cmd=raw.trim().toLowerCase();
+ const replies={
+  help:"ბრძანებები: help, about, score, missions, tips, clear",
+  about:"CYBER LAB PRO — სასწავლო ტერმინალი. რეალურ სისტემურ ბრძანებებს არ ასრულებს.",
+  score:()=>`ქულა: ${state.score}; შესრულებული მისიები: ${state.done.length}`,
+  missions:()=>`სულ ${activities.length} სასწავლო მისიაა. გადადი სექციაზე „მისიების ცენტრი“.`,
+  tips:"გამოიყენე უნიკალური პაროლები, ჩართე მრავალფაქტორიანი დაცვა და გადაამოწმე ბმულები."
+ };
+ if(cmd==="clear"){termOutput.innerHTML="";return}
+ let result=replies[cmd];
+ if(typeof result==="function")result=result();
+ if(!result)result="უცნობი ბრძანება. ხელმისაწვდომი ბრძანებების სანახავად დაწერე help.";
+ const line=document.createElement("div");
+ line.textContent="guest@cyberlab:~$ "+raw;
+ const response=document.createElement("div");
+ response.style.color="#43ff91";response.textContent=result;
+ termOutput.append(line,response);
 }
-newGame();
-document.getElementById("guessForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const input = document.getElementById("guessInput");
-  const n = Number(input.value);
-  if (!Number.isInteger(n) || n < 1 || n > 20) return;
-  tries++;
-  document.getElementById("attempts").textContent = tries;
-  const result = document.getElementById("guessResult");
-  if (n === secret) {
-    result.textContent = "სწორია! კოდი გამოიცანი " + tries + " მცდელობაში.";
-  } else {
-    result.textContent = n < secret ? "საიდუმლო რიცხვი მეტია." : "საიდუმლო რიცხვი ნაკლებია.";
-  }
+termInput.addEventListener("keydown",e=>{
+ if(e.key==="Enter"&&termInput.value.trim()){
+  runCommand(termInput.value);termInput.value="";
+ }
 });
-document.getElementById("restartGame").addEventListener("click", newGame);
-
-// Binary game
-document.querySelectorAll("[data-answer]").forEach(b =>
-  b.addEventListener("click", () => {
-    document.getElementById("binaryResult").textContent =
-      b.dataset.answer === "right"
-      ? "სწორია! 01000001 შეესაბამება A-ს ASCII კოდირებაში."
-      : "არასწორია. სცადე კიდევ.";
-  })
-);
-
-// Phishing quiz
-document.querySelectorAll("[data-quiz]").forEach(b =>
-  b.addEventListener("click", () => {
-    document.getElementById("quizResult").textContent =
-      b.dataset.quiz === "right"
-      ? "სწორია! შეამოწმე გამგზავნი და გამოიყენე ოფიციალური საიტი."
-      : "ეს სახიფათოა. სცადე სხვა პასუხი.";
-  })
-);
-
-// Local password estimator
-const pw = document.getElementById("pw");
-document.getElementById("togglePw").addEventListener("click", () => {
-  pw.type = pw.type === "password" ? "text" : "password";
-});
-pw.addEventListener("input", () => {
-  const s = pw.value;
-  let score = 0;
-  if (s.length >= 12) score++;
-  if (s.length >= 16) score++;
-  if (/[a-z]/.test(s) && /[A-Z]/.test(s)) score++;
-  if (/\d/.test(s)) score++;
-  if (/[^A-Za-z0-9]/.test(s)) score++;
-  const percent = s.length ? score * 20 : 0;
-  document.getElementById("pwBar").style.width = percent + "%";
-  const label = !s ? "ჯერ არ შემოწმებულა"
-    : score <= 1 ? "სუსტი — გაზარდე სიგრძე და უნიკალურობა"
-    : score <= 3 ? "საშუალო — შეიძლება გაუმჯობესება"
-    : "კარგი ნიშნები აქვს, თუმცა ეს უსაფრთხოების გარანტია არ არის";
-  document.getElementById("pwScore").textContent =
-    "შეფასება: " + label;
-});
-
-// Local file metadata only
-document.getElementById("fileInput").addEventListener("change", e => {
-  const file = e.target.files[0];
-  const result = document.getElementById("fileResult");
-  if (!file) {
-    result.textContent = "";
-    return;
-  }
-  const size = file.size < 1024 * 1024
-    ? (file.size / 1024).toFixed(2) + " KB"
-    : (file.size / (1024 * 1024)).toFixed(2) + " MB";
-  result.textContent =
-    "სახელი: " + file.name +
-    "\nტიპი: " + (file.type || "უცნობი") +
-    "\nზომა: " + size +
-    "\nშენიშვნა: ფაილი არ ატვირთულა და მავნე პროგრამებზე არ შემოწმებულა.";
-  result.style.whiteSpace = "pre-wrap";
-});
-
-// Dashboard demo
-document.getElementById("refreshDashboard").addEventListener("click", () => {
-  document.getElementById("dashboardMessage").textContent =
-    "დემო პანელი განახლდა: " + new Date().toLocaleTimeString() +
-    ". ეს არ წარმოადგენს რეალური ქსელის მონაცემებს.";
-});
+renderAll();
 </script>
 </body>
 </html>
