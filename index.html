@@ -5,378 +5,189 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#020805">
+<meta name="description" content="CYBER LAB PRO — interactive cyber learning academy">
 <title>CYBER LAB PRO — Cyber Academy</title>
 <style>
-:root{
-  --green:#43ff91;--green2:#00bd68;--bg:#020805;
-  --panel:rgba(4,19,11,.94);--line:#205b39;
-  --text:#e6ffed;--muted:#9bbda6;--red:#ff7777;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
- margin:0;background:var(--bg);color:var(--text);
- font-family:Consolas,"Courier New",monospace;
-}
-#matrix{position:fixed;inset:0;width:100%;height:100%;z-index:-2}
-body:after{
- content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
- background:linear-gradient(180deg,#02080520,#020805b8);
-}
-header{
- position:sticky;top:0;z-index:5;display:flex;align-items:center;
- justify-content:space-between;gap:16px;flex-wrap:wrap;padding:15px 5%;
- background:#020805ed;border-bottom:1px solid var(--line);
- backdrop-filter:blur(12px)
-}
-.logo{font-size:20px;font-weight:bold;color:var(--green);letter-spacing:2px}
-.logo span{color:white}
-nav{display:flex;gap:16px;flex-wrap:wrap;font-size:13px}
-a{color:var(--green);text-decoration:none}
-a:hover{color:white}
-button,input,select{font:inherit}
-button{
- background:#082416;color:var(--green);border:1px solid var(--green);
- padding:11px 15px;border-radius:4px;cursor:pointer;transition:.2s
-}
-button:hover{background:var(--green);color:#001407;box-shadow:0 0 16px #43ff9155}
-button:disabled{opacity:.45;cursor:not-allowed}
-main{width:min(1120px,92%);margin:auto}
-.hero{text-align:center;padding:80px 10px 45px}
-.eyebrow{color:var(--green);letter-spacing:3px;font-size:12px}
-h1{font-size:clamp(36px,8vw,76px);margin:22px 0;color:white}
-h1 span{color:var(--green);text-shadow:0 0 24px #43ff9170}
-.hero p{max-width:720px;margin:0 auto 25px;line-height:1.9;color:#c5e6cf}
-.online{color:var(--green);font-size:12px;margin-top:22px}
-.dot{display:inline-block;background:var(--green);width:8px;height:8px;
- border-radius:50%;margin-right:8px;box-shadow:0 0 12px var(--green)}
-.section{padding:32px 0}
-.section h2{color:var(--green);font-size:24px}
-.muted{color:var(--muted);font-size:13px;line-height:1.8}
+:root{--green:#43ff91;--green2:#00bd68;--bg:#020805;--panel:rgba(4,19,11,.94);--line:#205b39;--text:#e6ffed;--muted:#9bbda6;--red:#ff7777}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Consolas,"Courier New",monospace}
+#matrix{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#02080520,#020805b8)}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:13px 5%;background:#020805ed;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.logo{font-size:20px;font-weight:bold;color:var(--green);letter-spacing:2px;white-space:nowrap}.logo span{color:white}
+.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+nav{display:flex;gap:15px;flex-wrap:wrap;font-size:13px}a{color:var(--green);text-decoration:none}a:hover{color:white}
+button,input,select{font:inherit}button{background:#082416;color:var(--green);border:1px solid var(--green);padding:10px 14px;border-radius:4px;cursor:pointer;transition:.2s}
+button:hover{background:var(--green);color:#001407;box-shadow:0 0 16px #43ff9155}button:disabled{opacity:.45;cursor:not-allowed}
+.lang-switch{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:6px;background:#04160c}
+.lang-switch button{padding:7px 9px;border:0;background:transparent;font-size:12px}.lang-switch button.active{background:var(--green);color:#001407;font-weight:bold;box-shadow:0 0 12px #43ff9155}
+main{width:min(1120px,92%);margin:auto}.hero{text-align:center;padding:76px 10px 42px}.eyebrow{color:var(--green);letter-spacing:3px;font-size:12px}
+h1{font-size:clamp(36px,8vw,76px);margin:22px 0;color:white}h1 span{color:var(--green);text-shadow:0 0 24px #43ff9170}
+.hero p{max-width:720px;margin:0 auto 25px;line-height:1.9;color:#c5e6cf}.online{color:var(--green);font-size:12px;margin-top:22px}
+.dot{display:inline-block;background:var(--green);width:8px;height:8px;border-radius:50%;margin-right:8px;box-shadow:0 0 12px var(--green)}
+.section{padding:30px 0}.section h2{color:var(--green);font-size:24px}.muted{color:var(--muted);font-size:13px;line-height:1.8}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-.panel,.card{background:var(--panel);border:1px solid var(--line);
- border-radius:7px;padding:20px;box-shadow:0 8px 30px #0005}
-.card{display:flex;flex-direction:column;gap:12px}
-.card h3{margin:0;color:var(--green);font-size:17px}
-.card p{color:#c3ddcb;line-height:1.7;font-size:13px;flex:1}
-.icon{font-size:28px}
-.tag{font-size:11px;color:var(--green);border:1px solid var(--line);
- padding:5px 8px;display:inline-block;width:max-content;border-radius:3px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:25px}
-.stat{background:#04160c;border:1px solid var(--line);padding:15px 5px}
-.stat strong{display:block;color:var(--green);font-size:26px}
-.stat span{font-size:11px;color:var(--muted)}
-.terminal{background:#010402;border:1px solid #277447;padding:18px;
- border-radius:6px;line-height:1.9;min-height:180px;overflow-wrap:anywhere}
-#termInput{width:65%;background:transparent;border:0;outline:0;color:var(--green)}
-.bar{height:8px;background:#13281b;border-radius:9px;overflow:hidden}
-#progressBar{height:100%;width:0;background:var(--green);transition:.3s}
-.modal-bg{display:none;position:fixed;inset:0;background:#000d;z-index:20;
- padding:18px;align-items:center;justify-content:center}
-.modal{width:min(620px,100%);max-height:88vh;overflow:auto;
- background:#04130a;border:1px solid var(--green);border-radius:8px;padding:23px}
-.modal h2{color:var(--green)}
-.modal p{line-height:1.8}
-.answers{display:grid;gap:10px;margin-top:16px}
-.answers button{text-align:left;line-height:1.6}
-.feedback{margin-top:15px;background:#0a2515;border-left:3px solid var(--green);
- padding:14px;line-height:1.7}
-footer{text-align:center;border-top:1px solid var(--line);padding:30px 10px;
- color:var(--muted);font-size:12px;line-height:2}
-hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-@media(max-width:600px){
- header{padding:13px 4%}.logo{font-size:17px}nav{gap:10px;font-size:12px}
- .hero{padding-top:52px}.stats{gap:5px}.stat strong{font-size:21px}
- .panel,.card{padding:15px}
-}
+.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:20px;box-shadow:0 8px 30px #0005}
+.card{display:flex;flex-direction:column;gap:12px}.card h3{margin:0;color:var(--green);font-size:17px}.card p{color:#c3ddcb;line-height:1.7;font-size:13px;flex:1}
+.icon{font-size:28px}.tag{font-size:11px;color:var(--green);border:1px solid var(--line);padding:5px 8px;display:inline-block;width:max-content;border-radius:3px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:25px}.stat{background:#04160c;border:1px solid var(--line);padding:15px 5px}.stat strong{display:block;color:var(--green);font-size:26px}.stat span{font-size:11px;color:var(--muted)}
+.terminal{background:#010402;border:1px solid #277447;padding:18px;border-radius:6px;line-height:1.9;min-height:180px;overflow-wrap:anywhere}
+#termInput{width:min(65%,420px);background:transparent;border:0;outline:0;color:var(--green);padding:5px}
+.bar{height:8px;background:#13281b;border-radius:9px;overflow:hidden}#progressBar{height:100%;width:0;background:var(--green);transition:.3s}
+.modal-bg{display:none;position:fixed;inset:0;background:#000d;z-index:20;padding:18px;align-items:center;justify-content:center}
+.modal{width:min(620px,100%);max-height:88vh;overflow:auto;background:#04130a;border:1px solid var(--green);border-radius:8px;padding:23px}
+.modal h2{color:var(--green)}.modal p{line-height:1.8}.answers{display:grid;gap:10px;margin-top:16px}.answers button{text-align:left;line-height:1.6}
+.feedback{margin-top:15px;background:#0a2515;border-left:3px solid var(--green);padding:14px;line-height:1.7}
+footer{text-align:center;border-top:1px solid var(--line);padding:30px 10px;color:var(--muted);font-size:12px;line-height:2}
+@media(max-width:760px){header{padding:12px 4%;align-items:flex-start}.header-right{width:100%;justify-content:space-between}nav{gap:10px;font-size:12px}.hero{padding-top:48px}}
+@media(max-width:420px){.logo{font-size:16px}.header-right{gap:8px}nav{width:100%;order:2}.lang-switch button{padding:7px 8px}.stats{gap:5px}.stat strong{font-size:21px}.panel,.card{padding:15px}.hero p{font-size:13px}}
 </style>
 </head>
 <body>
 <canvas id="matrix" aria-hidden="true"></canvas>
-
 <header>
   <div class="logo">CYBER<span>LAB</span> PRO</div>
-  <nav>
-    <a href="#academy">აკადემია</a>
-    <a href="#missions">მისიები</a>
-    <a href="#terminal">ტერმინალი</a>
-    <a href="#progress">პროგრესი</a>
-    <a href="#premium">Premium</a>
-  </nav>
-  <button onclick="showProfile()">პროფილი</button>
+  <div class="header-right">
+    <nav>
+      <a href="#academy" data-i18n="navAcademy">აკადემია</a>
+      <a href="#missions" data-i18n="navMissions">მისიები</a>
+      <a href="#terminal" data-i18n="navTerminal">ტერმინალი</a>
+      <a href="#progress" data-i18n="navProgress">პროგრესი</a>
+      <a href="#premium">Premium</a>
+    </nav>
+    <div class="lang-switch" role="group" aria-label="Choose language">
+      <button type="button" data-lang="ka" class="active" aria-pressed="true">KA</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    </div>
+    <button onclick="showProfile()" data-i18n="profile">პროფილი</button>
+  </div>
 </header>
-
 <main>
 <section class="hero">
   <div class="eyebrow">CYBERSECURITY • LOGIC • DIGITAL SKILLS</div>
   <h1>ENTER THE <span>MATRIX</span></h1>
-  <p>გამოიკვლიე ციფრული სამყარო, ამოხსენი მისიები, ამოიცანი ონლაინ საფრთხეები
-  და განავითარე შენი ლოგიკური აზროვნება. შენი მისია იწყება აქ.</p>
-  <button onclick="document.querySelector('#academy').scrollIntoView({behavior:'smooth'})">
-    დაიწყე სწავლა →
-  </button>
-  <div class="online"><span class="dot"></span>სასწავლო გარემო აქტიურია</div>
+  <p data-i18n="heroText">გამოიკვლიე ციფრული სამყარო, ამოხსენი მისიები, ამოიცანი ონლაინ საფრთხეები და განავითარე შენი ლოგიკური აზროვნება. შენი მისია იწყება აქ.</p>
+  <button onclick="document.querySelector('#academy').scrollIntoView({behavior:'smooth'})" data-i18n="startLearning">დაიწყე სწავლა →</button>
+  <div class="online"><span class="dot"></span><span data-i18n="active">სასწავლო გარემო აქტიურია</span></div>
   <div class="stats">
-    <div class="stat"><strong id="score">0</strong><span>ქულა</span></div>
-    <div class="stat"><strong id="completed">0</strong><span>შესრულებული მისია</span></div>
-    <div class="stat"><strong id="badges">0</strong><span>მიღწევა</span></div>
+    <div class="stat"><strong id="score">0</strong><span data-i18n="points">ქულა</span></div>
+    <div class="stat"><strong id="completed">0</strong><span data-i18n="completedMissions">შესრულებული მისია</span></div>
+    <div class="stat"><strong id="badges">0</strong><span data-i18n="achievements">მიღწევა</span></div>
   </div>
 </section>
-
 <section class="section" id="academy">
-  <h2>// აკადემია</h2>
-  <p class="muted">აირჩიე სასწავლო მიმართულება. დემო-ვერსიაში თითოეულ მიმართულებას სამი მისია აქვს.</p>
+  <h2 data-i18n="academyTitle">// აკადემია</h2>
+  <p class="muted" data-i18n="academyIntro">აირჩიე სასწავლო მიმართულება. დემო-ვერსიაში თითოეულ მიმართულებას სამი მისია აქვს.</p>
   <div class="grid" id="categories"></div>
 </section>
-
 <section class="section" id="missions">
-  <h2>// მისიების ცენტრი</h2>
-  <p class="muted" id="missionIntro">აირჩიე მისია, გააანალიზე სიტუაცია და შეამოწმე შენი ცოდნა.</p>
-  <button onclick="renderMissions()">ყველა მისია</button>
+  <h2 data-i18n="missionCenter">// მისიების ცენტრი</h2>
+  <p class="muted" id="missionIntro" data-i18n="missionIntro">აირჩიე მისია, გააანალიზე სიტუაცია და შეამოწმე შენი ცოდნა.</p>
+  <button onclick="renderMissions()" data-i18n="allMissions">ყველა მისია</button>
   <div class="grid" id="missionGrid" style="margin-top:15px"></div>
 </section>
-
 <section class="section" id="terminal">
-  <h2>// სასწავლო ტერმინალი</h2>
-  <p class="muted">ეს ტერმინალი მხოლოდ სასწავლო პასუხებს აჩვენებს. ის არ ასრულებს ბრძანებებს შენს კომპიუტერზე.</p>
+  <h2 data-i18n="terminalTitle">// სასწავლო ტერმინალი</h2>
+  <p class="muted" data-i18n="terminalIntro">ეს ტერმინალი მხოლოდ სასწავლო პასუხებს აჩვენებს. ის არ ასრულებს ბრძანებებს შენს კომპიუტერზე.</p>
   <div class="terminal">
-    <div id="termOutput">
-      <div>CYBER LAB PRO [EDUCATIONAL MODE]</div>
-      <div>დაწერე <span style="color:var(--green)">help</span> დასაწყებად.</div>
-    </div>
-    <div style="color:var(--green);margin-top:10px">
-      guest@cyberlab:~$ <input id="termInput" placeholder="help" autocomplete="off" aria-label="სასწავლო ბრძანება">
-    </div>
+    <div id="termOutput"><div>CYBER LAB PRO [EDUCATIONAL MODE]</div><div>დაწერე <span style="color:var(--green)">help</span> დასაწყებად.</div></div>
+    <div style="color:var(--green);margin-top:10px">guest@cyberlab:~$ <input id="termInput" placeholder="help" autocomplete="off" aria-label="Educational command"></div>
   </div>
 </section>
-
 <section class="section" id="progress">
-  <h2>// შენი პროგრესი</h2>
+  <h2 data-i18n="progressTitle">// შენი პროგრესი</h2>
   <div class="panel">
-    <p>მისიების შესრულება</p>
-    <div class="bar"><div id="progressBar"></div></div>
+    <p data-i18n="missionProgress">მისიების შესრულება</p><div class="bar"><div id="progressBar"></div></div>
     <p class="muted" id="progressText">ჯერ არ შეგისრულებია მისია.</p>
-    <p class="muted">პროგრესი ინახება ამ ბრაუზერში. სხვა მოწყობილობაზე ავტომატურად არ სინქრონიზდება.</p>
-    <button onclick="resetProgress()">პროგრესის განულება</button>
+    <p class="muted" data-i18n="localProgress">პროგრესი ინახება ამ ბრაუზერში. სხვა მოწყობილობაზე ავტომატურად არ სინქრონიზდება.</p>
+    <button onclick="resetProgress()" data-i18n="reset">პროგრესის განულება</button>
   </div>
 </section>
-
 <section class="section" id="premium">
   <h2>// CYBER LAB PRO PREMIUM</h2>
   <div class="panel">
     <span class="tag">PREMIUM MEMBERSHIP</span>
-    <h3 style="font-size:32px;color:var(--green);margin-bottom:4px">59.99 ₾ <span style="font-size:14px">/ თვე</span></h3>
-    <p class="muted">Premium-ის დაგეგმილი შესაძლებლობები:</p>
+    <h3 style="font-size:32px;color:var(--green);margin-bottom:4px">59.99 ₾ <span style="font-size:14px" data-i18n="perMonth">/ თვე</span></h3>
+    <p class="muted" data-i18n="premiumIntro">Premium-ის დაგეგმილი შესაძლებლობები:</p>
     <ul class="muted" style="line-height:2">
-      <li>ყველა გამოქვეყნებულ მისიაზე წვდომა</li>
-      <li>გაფართოებული ლოგიკური და კიბერუსაფრთხოების გამოწვევები</li>
-      <li>დონეები, მიღწევები და სასწავლო პროგრესი</li>
-      <li>ახალი აქტივობები მათი დამატებისთანავე</li>
+      <li data-i18n="premium1">ყველა გამოქვეყნებულ მისიაზე წვდომა</li><li data-i18n="premium2">გაფართოებული ლოგიკური და კიბერუსაფრთხოების გამოწვევები</li>
+      <li data-i18n="premium3">დონეები, მიღწევები და სასწავლო პროგრესი</li><li data-i18n="premium4">ახალი აქტივობები მათი დამატებისთანავე</li>
     </ul>
-    <button onclick="showPremium()">Premium-ის შესახებ</button>
-    <p class="muted">ეს სატესტო გვერდია. გადახდა, გამოწერა და ფასიანი წვდომის კონტროლი ჯერ არ მუშაობს.</p>
+    <button onclick="showPremium()" data-i18n="premiumAbout">Premium-ის შესახებ</button>
+    <p class="muted" data-i18n="premiumNotice">ეს სატესტო გვერდია. გადახდა, გამოწერა და ფასიანი წვდომის კონტროლი ჯერ არ მუშაობს.</p>
   </div>
 </section>
 </main>
-
-<footer>
-  CYBER LAB PRO © 2026<br>
-  ისწავლე • იფიქრე • დაიცავი თავი<br>
-  სასწავლო პროექტი — გამოიყენე ცოდნა პასუხისმგებლობით.
-</footer>
-
+<footer>CYBER LAB PRO © 2026<br><span data-i18n="footerLine">ისწავლე • იფიქრე • დაიცავი თავი</span><br><span data-i18n="footerNotice">სასწავლო პროექტი — გამოიყენე ცოდნა პასუხისმგებლობით.</span></footer>
 <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <button style="float:right" onclick="closeModal()">დახურვა ✕</button>
-    <div id="modalContent"></div>
-  </div>
+  <div class="modal"><button style="float:right" onclick="closeModal()" data-i18n="close">დახურვა ✕</button><div id="modalContent"></div></div>
 </div>
-
 <script>
-// MATRIX ANIMATION
-const canvas=document.getElementById("matrix");
-const ctx=canvas.getContext("2d");
-let drops=[],font=19;
-function resize(){
- canvas.width=innerWidth;canvas.height=innerHeight;
- font=innerWidth<600?15:19;
- drops=Array(Math.ceil(canvas.width/font)).fill(0).map(()=>Math.random()*-60);
-}
-function matrix(){
- ctx.fillStyle="rgba(0,5,2,.12)";
- ctx.fillRect(0,0,canvas.width,canvas.height);
- ctx.font="bold "+font+"px monospace";
- for(let i=0;i<drops.length;i++){
-  let digit=Math.random()>.5?"1":"0";
-  let y=drops[i]*font;
-  ctx.fillStyle=Math.random()>.96?"#eaffef":Math.random()>.45?"#43ff91":"#07974e";
-  ctx.fillText(digit,i*font,y);
-  if(y>canvas.height&&Math.random()>.975)drops[i]=0;
-  drops[i]+=.5+Math.random()*.7;
- }
- requestAnimationFrame(matrix);
-}
+// Language packs: all interface and demo activity text is authored in three languages.
+const i18n={
+ka:{navAcademy:"აკადემია",navMissions:"მისიები",navTerminal:"ტერმინალი",navProgress:"პროგრესი",profile:"პროფილი",heroText:"გამოიკვლიე ციფრული სამყარო, ამოხსენი მისიები, ამოიცანი ონლაინ საფრთხეები და განავითარე შენი ლოგიკური აზროვნება. შენი მისია იწყება აქ.",startLearning:"დაიწყე სწავლა →",active:"სასწავლო გარემო აქტიურია",points:"ქულა",completedMissions:"შესრულებული მისია",achievements:"მიღწევა",academyTitle:"// აკადემია",academyIntro:"აირჩიე სასწავლო მიმართულება. დემო-ვერსიაში თითოეულ მიმართულებას სამი მისია აქვს.",missionCenter:"// მისიების ცენტრი",missionIntro:"აირჩიე მისია, გააანალიზე სიტუაცია და შეამოწმე შენი ცოდნა.",allMissions:"ყველა მისია",terminalTitle:"// სასწავლო ტერმინალი",terminalIntro:"ეს ტერმინალი მხოლოდ სასწავლო პასუხებს აჩვენებს. ის არ ასრულებს ბრძანებებს შენს კომპიუტერზე.",progressTitle:"// შენი პროგრესი",missionProgress:"მისიების შესრულება",localProgress:"პროგრესი ინახება ამ ბრაუზერში. სხვა მოწყობილობაზე ავტომატურად არ სინქრონიზდება.",reset:"პროგრესის განულება",perMonth:"/ თვე",premiumIntro:"Premium-ის დაგეგმილი შესაძლებლობები:",premium1:"ყველა გამოქვეყნებულ მისიაზე წვდომა",premium2:"გაფართოებული ლოგიკური და კიბერუსაფრთხოების გამოწვევები",premium3:"დონეები, მიღწევები და სასწავლო პროგრესი",premium4:"ახალი აქტივობები მათი დამატებისთანავე",premiumAbout:"Premium-ის შესახებ",premiumNotice:"ეს სატესტო გვერდია. გადახდა, გამოწერა და ფასიანი წვდომის კონტროლი ჯერ არ მუშაობს.",footerLine:"ისწავლე • იფიქრე • დაიცავი თავი",footerNotice:"სასწავლო პროექტი — გამოიყენე ცოდნა პასუხისმგებლობით.",close:"დახურვა ✕",done:"შესრულებულია",trainingMission:"სასწავლო მისია",start:"დაწყება →",finished:"დასრულებულია",correct:"✓ სწორია! +10 ქულა",tryAgain:"ჯერ არა — სცადე კიდევ.",continue:"გაგრძელება →",retry:"ხელახლა ცდა",profileTitle:"ჩემი პროფილი",localProfile:"ეს არის ლოკალური დემო-პროფილი. ნამდვილ ანგარიშზე შესვლა ჯერ არ არის ჩართული.",scoreLabel:"ქულები",doneLabel:"შესრულებული მისიები",badgesLabel:"მიღწევები",noBadges:"ჯერ არ გაქვს მიღწევა.",badgeStarter:"პირველი 3 მისია",badgeMaster:"ყველა მისია",profileNotice:"პროგრესი ამ ბრაუზერში ინახება. ის არ არის დაკავშირებული მომხმარებლის ონლაინ ანგარიშთან.",premiumTitle:"CYBER LAB PRO PREMIUM",premiumPrice:"ეს არის დაგეგმილი გამოწერის ფასი. გამოწერა და გადახდა ამ ვერსიაში ჯერ არ მუშაობს.",premiumSafe:"რეალური გაშვებისთვის საჭიროა უსაფრთხო ავტორიზაცია, სერვერი, გამოწერის მართვა და გადახდის პროვაიდერი.",premiumNoCard:"არ შეიყვანო ბარათის მონაცემები — გადახდის ფორმა არ არსებობს.",progressCount:"შესრულებულია {done} / {total} მისია — {pct}%.",noneDone:"ჯერ არ შეგისრულებია მისია.",filterSuffix:" — აირჩიე მისია.",confirmReset:"ნამდვილად გსურს პროგრესის განულება?",help:"ბრძანებები: help, about, score, missions, tips, clear",about:"CYBER LAB PRO — სასწავლო ტერმინალი. რეალურ სისტემურ ბრძანებებს არ ასრულებს.",scoreCmd:"ქულა: {score}; შესრულებული მისიები: {done}",missionsCmd:"სულ {total} სასწავლო მისიაა. გადადი სექციაზე „მისიების ცენტრი“.",tips:"გამოიყენე უნიკალური პაროლები, ჩართე მრავალფაქტორიანი დაცვა და გადაამოწმე ბმულები.",unknown:"უცნობი ბრძანება. ხელმისაწვდომი ბრძანებების სანახავად დაწერე help.",command:"სასწავლო ბრძანება"},
+en:{navAcademy:"Academy",navMissions:"Missions",navTerminal:"Terminal",navProgress:"Progress",profile:"Profile",heroText:"Explore the digital world, complete missions, recognize online threats, and strengthen your logical thinking. Your mission starts here.",startLearning:"Start learning →",active:"Learning environment is active",points:"Points",completedMissions:"Missions completed",achievements:"Achievements",academyTitle:"// ACADEMY",academyIntro:"Choose a learning track. The demo includes three missions in each track.",missionCenter:"// MISSION CENTER",missionIntro:"Choose a mission, analyze the situation, and test your knowledge.",allMissions:"All missions",terminalTitle:"// LEARNING TERMINAL",terminalIntro:"This terminal displays educational responses only. It does not execute commands on your computer.",progressTitle:"// YOUR PROGRESS",missionProgress:"Mission completion",localProgress:"Progress is saved in this browser. It does not automatically sync to other devices.",reset:"Reset progress",perMonth:"/ month",premiumIntro:"Planned Premium features:",premium1:"Access to all published missions",premium2:"Advanced logic and cybersecurity challenges",premium3:"Levels, achievements, and learning progress",premium4:"New activities as soon as they are added",premiumAbout:"About Premium",premiumNotice:"This is a demo page. Payments, subscriptions, and paid-access controls are not active yet.",footerLine:"Learn • Think • Protect yourself",footerNotice:"Educational project — use your knowledge responsibly.",close:"Close ✕",done:"Completed",trainingMission:"Learning mission",start:"Start →",finished:"Completed",correct:"✓ Correct! +10 points",tryAgain:"Not quite — try again.",continue:"Continue →",retry:"Try again",profileTitle:"My profile",localProfile:"This is a local demo profile. Real account sign-in is not enabled yet.",scoreLabel:"Points",doneLabel:"Missions completed",badgesLabel:"Achievements",noBadges:"No achievements yet.",badgeStarter:"First 3 missions",badgeMaster:"All missions",profileNotice:"Progress is stored in this browser. It is not connected to an online user account.",premiumTitle:"CYBER LAB PRO PREMIUM",premiumPrice:"This is a planned subscription price. Subscription and payment do not work in this version yet.",premiumSafe:"A real launch requires secure authentication, a server, subscription management, and a payment provider.",premiumNoCard:"Do not enter card details — no payment form exists.",progressCount:"Completed {done} / {total} missions — {pct}%.",noneDone:"You have not completed a mission yet.",filterSuffix:" — choose a mission.",confirmReset:"Are you sure you want to reset your progress?",help:"Commands: help, about, score, missions, tips, clear",about:"CYBER LAB PRO — educational terminal. It does not execute real system commands.",scoreCmd:"Points: {score}; missions completed: {done}",missionsCmd:"There are {total} learning missions. Go to the Mission Center section.",tips:"Use unique passwords, enable multi-factor authentication, and verify links.",unknown:"Unknown command. Type help to see available commands.",command:"Learning command"},
+ru:{navAcademy:"Академия",navMissions:"Миссии",navTerminal:"Терминал",navProgress:"Прогресс",profile:"Профиль",heroText:"Исследуй цифровой мир, выполняй миссии, распознавай онлайн-угрозы и развивай логическое мышление. Твоя миссия начинается здесь.",startLearning:"Начать обучение →",active:"Учебная среда активна",points:"Очки",completedMissions:"Выполнено миссий",achievements:"Достижения",academyTitle:"// АКАДЕМИЯ",academyIntro:"Выбери направление обучения. В демо-версии в каждом направлении по три миссии.",missionCenter:"// ЦЕНТР МИССИЙ",missionIntro:"Выбери миссию, проанализируй ситуацию и проверь свои знания.",allMissions:"Все миссии",terminalTitle:"// УЧЕБНЫЙ ТЕРМИНАЛ",terminalIntro:"Этот терминал показывает только учебные ответы. Он не выполняет команды на твоём компьютере.",progressTitle:"// ТВОЙ ПРОГРЕСС",missionProgress:"Выполнение миссий",localProgress:"Прогресс сохраняется в этом браузере. Автоматической синхронизации с другими устройствами нет.",reset:"Сбросить прогресс",perMonth:"/ месяц",premiumIntro:"Планируемые возможности Premium:",premium1:"Доступ ко всем опубликованным миссиям",premium2:"Продвинутые задания по логике и кибербезопасности",premium3:"Уровни, достижения и учебный прогресс",premium4:"Новые задания сразу после добавления",premiumAbout:"О Premium",premiumNotice:"Это тестовая страница. Оплата, подписки и контроль платного доступа пока не работают.",footerLine:"Учись • Думай • Защищай себя",footerNotice:"Учебный проект — используй знания ответственно.",close:"Закрыть ✕",done:"Выполнено",trainingMission:"Учебная миссия",start:"Начать →",finished:"Завершено",correct:"✓ Верно! +10 очков",tryAgain:"Пока неверно — попробуй ещё.",continue:"Продолжить →",retry:"Повторить",profileTitle:"Мой профиль",localProfile:"Это локальный демо-профиль. Вход в настоящий аккаунт пока не включён.",scoreLabel:"Очки",doneLabel:"Выполнено миссий",badgesLabel:"Достижения",noBadges:"Пока нет достижений.",badgeStarter:"Первые 3 миссии",badgeMaster:"Все миссии",profileNotice:"Прогресс хранится в этом браузере. Он не связан с онлайн-аккаунтом.",premiumTitle:"CYBER LAB PRO PREMIUM",premiumPrice:"Это планируемая цена подписки. В этой версии подписка и оплата пока не работают.",premiumSafe:"Для запуска нужны безопасная авторизация, сервер, управление подписками и платёжный провайдер.",premiumNoCard:"Не вводи данные карты — формы оплаты нет.",progressCount:"Выполнено {done} / {total} миссий — {pct}%.",noneDone:"Ты ещё не выполнил ни одной миссии.",filterSuffix:" — выбери миссию.",confirmReset:"Точно сбросить прогресс?",help:"Команды: help, about, score, missions, tips, clear",about:"CYBER LAB PRO — учебный терминал. Он не выполняет реальные системные команды.",scoreCmd:"Очки: {score}; выполнено миссий: {done}",missionsCmd:"Всего {total} учебных миссий. Перейди в раздел «Центр миссий».",tips:"Используй уникальные пароли, включай многофакторную защиту и проверяй ссылки.",unknown:"Неизвестная команда. Введи help, чтобы увидеть список команд.",command:"Учебная команда"}
+};
+let lang=localStorage.getItem("cyberlab_language");
+if(!["ka","en","ru"].includes(lang))lang="ka";
+const tr=(key)=>i18n[lang][key]??i18n.ka[key]??key;
+function setLanguage(next){if(!i18n[next])return;lang=next;try{localStorage.setItem("cyberlab_language",lang)}catch(e){}document.documentElement.lang=lang;document.querySelectorAll("[data-lang]").forEach(b=>{const active=b.dataset.lang===lang;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(i18n[lang][key])el.textContent=tr(key)});renderAll()}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>setLanguage(b.dataset.lang)));
+
+// Matrix animation
+const canvas=document.getElementById("matrix"),ctx=canvas.getContext("2d");let drops=[],font=19;
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;font=innerWidth<600?15:19;drops=Array(Math.ceil(canvas.width/font)).fill(0).map(()=>Math.random()*-60)}
+function matrix(){ctx.fillStyle="rgba(0,5,2,.12)";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.font="bold "+font+"px monospace";for(let i=0;i<drops.length;i++){let y=drops[i]*font;ctx.fillStyle=Math.random()>.96?"#eaffef":Math.random()>.45?"#43ff91":"#07974e";ctx.fillText(Math.random()>.5?"1":"0",i*font,y);if(y>canvas.height&&Math.random()>.975)drops[i]=0;drops[i]+=.5+Math.random()*.7}requestAnimationFrame(matrix)}
 addEventListener("resize",resize);resize();matrix();
 
-// DEMO CONTENT
 const categories=[
- {id:"security",icon:"🛡️",name:"კიბერუსაფრთხოება",desc:"პაროლები, ფიშინგი და უსაფრთხო ონლაინ ჩვევები."},
- {id:"logic",icon:"🧩",name:"ლოგიკა და თავსატეხები",desc:"მინიშნებები, ნიმუშები და ანალიტიკური აზროვნება."},
- {id:"coding",icon:"⌨️",name:"კოდი და ტერმინალი",desc:"პროგრამირების საფუძვლები და სასწავლო ბრძანებები."},
- {id:"network",icon:"🌐",name:"ქსელები და ციფრული კვალი",desc:"კავშირები, მონაცემები და პირადი ინფორმაციის დაცვა."},
- {id:"missions",icon:"🕵️",name:"სიუჟეტური მისიები",desc:"გამოიძიე შემთხვევები და იპოვე უსაფრთხო გამოსავალი."}
+{id:"security",icon:"🛡️",name:{ka:"კიბერუსაფრთხოება",en:"Cybersecurity",ru:"Кибербезопасность"},desc:{ka:"პაროლები, ფიშინგი და უსაფრთხო ონლაინ ჩვევები.",en:"Passwords, phishing, and safe online habits.",ru:"Пароли, фишинг и безопасные привычки в сети."}},
+{id:"logic",icon:"🧩",name:{ka:"ლოგიკა და თავსატეხები",en:"Logic & Puzzles",ru:"Логика и головоломки"},desc:{ka:"მინიშნებები, ნიმუშები და ანალიტიკური აზროვნება.",en:"Clues, patterns, and analytical thinking.",ru:"Подсказки, закономерности и аналитическое мышление."}},
+{id:"coding",icon:"⌨️",name:{ka:"კოდი და ტერმინალი",en:"Code & Terminal",ru:"Код и терминал"},desc:{ka:"პროგრამირების საფუძვლები და სასწავლო ბრძანებები.",en:"Programming basics and learning commands.",ru:"Основы программирования и учебные команды."}},
+{id:"network",icon:"🌐",name:{ka:"ქსელები და ციფრული კვალი",en:"Networks & Digital Footprint",ru:"Сети и цифровой след"},desc:{ka:"კავშირები, მონაცემები და პირადი ინფორმაციის დაცვა.",en:"Connections, data, and personal information protection.",ru:"Соединения, данные и защита личной информации."}},
+{id:"missions",icon:"🕵️",name:{ka:"სიუჟეტური მისიები",en:"Story Missions",ru:"Сюжетные миссии"},desc:{ka:"გამოიძიე შემთხვევები და იპოვე უსაფრთხო გამოსავალი.",en:"Investigate scenarios and find safe solutions.",ru:"Разбирай ситуации и находи безопасные решения."}}
 ];
-
+const A=(id,cat,icon,title,story,opts,correct,why)=>({id,cat,icon,title,story,opts,correct,why});
 const activities=[
-{id:"s1",cat:"security",title:"საეჭვო შეტყობინება",icon:"📩",story:"შეტყობინება გეუბნება, რომ ანგარიში დაიბლოკება, თუ დაუყოვნებლივ არ გახსნი ბმულს და პაროლს არ შეიყვან. რას აკეთებ?",opts:["ვხსნი ბმულს","არ ვხსნი ბმულს და ოფიციალური არხით ვამოწმებ","პაროლს გამგზავნს ვუგზავნი"],correct:1,why:"გადაუდებელი მოთხოვნა და პაროლის მოთხოვნა ფიშინგის ნიშნებია. შედი ოფიციალურ აპში ან საიტზე დამოუკიდებლად."},
-{id:"s2",cat:"security",title:"ანგარიშის დაცვა",icon:"🔐",story:"როგორ გააძლიერებ შენს ანგარიშს?",opts:["ყველგან ერთ პაროლს გამოვიყენებ","გრძელ, უნიკალურ პაროლს და მრავალფაქტორიან დაცვას ჩავრთავ","პაროლს მეგობარს გავუზიარებ"],correct:1,why:"უნიკალური პაროლი და მრავალფაქტორიანი ავთენტიფიკაცია ანგარიშის დაცვას აძლიერებს."},
-{id:"s3",cat:"security",title:"საჯარო Wi-Fi",icon:"📶",story:"კაფეში უცნობი Wi-Fi ქსელი ჩანს. რა არის უსაფრთხო არჩევანი?",opts:["ნებისმიერ ქსელს დავუკავშირდები","ქსელის სახელს თანამშრომელთან გადავამოწმებ და მგრძნობიარე მოქმედებებს მოვერიდები","პაროლებს შევიყვან შესამოწმებლად"],correct:1,why:"ყალბი Wi-Fi ქსელი მონაცემების მოპარვისთვის შეიძლება გამოიყენონ."},
-{id:"l1",cat:"logic",title:"ლოგიკური მიმდევრობა",icon:"🔎",story:"მიმდევრობაა 2, 4, 8, 16, __. რომელი რიცხვი მოდის შემდეგ?",opts:["18","24","32"],correct:2,why:"ყოველი შემდეგი რიცხვი წინა რიცხვის გაორმაგებით მიიღება."},
-{id:"l2",cat:"logic",title:"სამი პირობა",icon:"🧠",story:"კოდი ლუწია, 10-ზე მეტია და 15-ზე ნაკლებია. რომელი შეესაბამება?",opts:["12","15","9"],correct:0,why:"12 ლუწია, 10-ზე მეტია და 15-ზე ნაკლები."},
-{id:"l3",cat:"logic",title:"სარეზერვო ასლი",icon:"📁",story:"ორიგინალი ფაილი და სარეზერვო ასლი ერთ მოწყობილობაზეა. რა რისკია?",opts:["რისკი საერთოდ არ არსებობს","მოწყობილობის დაკარგვამ ორივე ასლი შეიძლება დააზიანოს","სარეზერვო ასლი არასდროს გვჭირდება"],correct:1,why:"სარეზერვო ასლები ცალკე, უსაფრთხო ადგილასაც უნდა ინახებოდეს."},
-{id:"c1",cat:"coding",title:"სასწავლო ბრძანება",icon:"⌨️",story:"ტერმინალში გინდა ხელმისაწვდომი ბრძანებების ნახვა. რას სცდი?",opts:["help","steal","destroy"],correct:0,why:"help ხშირად ხელმისაწვდომი ბრძანებების ჩამონათვალს აჩვენებს."},
-{id:"c2",cat:"coding",title:"პირობის შემოწმება",icon:"💻",story:"პროგრამამ „კი“ უნდა აჩვენოს, თუ ქულა 50 ან მეტია. რომელი პირობაა სწორი?",opts:["score < 50","score >= 50","score == 0"],correct:1,why:">= ნიშნავს მეტია ან ტოლია."},
-{id:"c3",cat:"coding",title:"შეცდომის პოვნა",icon:"🐛",story:"პროგრამა არ მუშაობს. რა არის კარგი პირველი ნაბიჯი?",opts:["ყველაფერი წავშალო","შეცდომის შეტყობინება და შესაბამისი კოდი შევამოწმო","შემთხვევითი კოდი დავამატო"],correct:1,why:"შეცდომის შეტყობინება ხშირად პრობლემის მიზეზის პოვნაში გვეხმარება."},
-{id:"n1",cat:"network",title:"ციფრული კვალი",icon:"👣",story:"საიტი გთხოვს პირად მონაცემებს, რომლებიც მომსახურებისთვის საჭირო არ ჩანს. რას იზამ?",opts:["ყველაფერს შევავსებ","შევამოწმებ, რატომ სჭირდება ეს ინფორმაცია და ზედმეტს არ გავაზიარებ","მონაცემებს საჯაროდ გამოვაქვეყნებ"],correct:1,why:"გააზიარე მხოლოდ აუცილებელი ინფორმაცია და გადაამოწმე საიტის სანდოობა."},
-{id:"n2",cat:"network",title:"HTTPS",icon:"🌐",story:"საიტის მისამართი HTTPS-ით იწყება. რას ნიშნავს ეს?",opts:["საიტი აუცილებლად სანდოა","კავშირი დაშიფრულია, მაგრამ საიტის პატიოსნება გარანტირებული არაა","საიტზე საფრთხე შეუძლებელია"],correct:1,why:"თაღლითურ საიტსაც შეიძლება ჰქონდეს HTTPS. შეამოწმე დომენი და გამგზავნი."},
-{id:"n3",cat:"network",title:"ფაილის გაზიარება",icon:"📂",story:"გუნდს ფაილი უნდა გაუზიარო. რომელი არჩევანია უსაფრთხო?",opts:["ბმულს ყველასთვის საჯაროს გავხდი","წვდომას მხოლოდ საჭირო ადამიანებს მივცემ","პაროლს საჯარო ბმულში ჩავწერ"],correct:1,why:"წვდომა მხოლოდ საჭირო ადამიანებს მიანიჭე."},
-{id:"m1",cat:"missions",title:"გატეხილი ანგარიში",icon:"🕵️",story:"ანგარიშზე უცნობი შესვლა შენიშნე. რა უნდა გააკეთო სანდო მოწყობილობიდან?",opts:["უგულებელვყო","შევცვალო პაროლი, დავასრულო უცნობი სესიები და ჩავრთო დამატებითი დაცვა","იგივე პაროლი სხვაგანაც გამოვიყენო"],correct:1,why:"პაროლის შეცვლა, უცნობი სესიების დახურვა და დამატებითი დაცვა რეაგირების მნიშვნელოვანი ნაბიჯებია."},
-{id:"m2",cat:"missions",title:"უცნობი USB",icon:"💾",story:"იპოვე უცნობი USB მოწყობილობა. რა არის უსაფრთხო არჩევანი?",opts:["კომპიუტერში შევაერთო","არ შევაერთო და პასუხისმგებელ პირს გადავცე","ფაილები ყველას გავუგზავნო"],correct:1,why:"უცნობ USB მოწყობილობას შეიძლება მავნე პროგრამა ჰქონდეს."},
-{id:"m3",cat:"missions",title:"ფიშინგის გამოძიება",icon:"🧪",story:"ელფოსტა გპირდება პრიზს და გთხოვს პაროლს უცნაური ბმულის საშუალებით. რა არის ყველაზე საეჭვო?",opts:["მოულოდნელი პრიზი და პაროლის მოთხოვნა","ტექსტის არსებობა","შეტყობინების დრო"],correct:0,why:"მოულოდნელი პრიზი, პაროლის მოთხოვნა და უცნაური ბმული ფიშინგის ნიშნებია."}
+A("s1","security","📩",{ka:"საეჭვო შეტყობინება",en:"Suspicious message",ru:"Подозрительное сообщение"},{ka:"შეტყობინება გეუბნება, რომ ანგარიში დაიბლოკება, თუ დაუყოვნებლივ არ გახსნი ბმულს და პაროლს არ შეიყვან. რას აკეთებ?",en:"A message says your account will be blocked unless you open a link and enter your password immediately. What do you do?",ru:"В сообщении говорится, что аккаунт заблокируют, если ты немедленно не откроешь ссылку и не введёшь пароль. Что делать?"},[{ka:"ვხსნი ბმულს",en:"I open the link",ru:"Открываю ссылку"},{ka:"არ ვხსნი ბმულს და ოფიციალური არხით ვამოწმებ",en:"I avoid the link and verify through an official channel",ru:"Не открываю ссылку и проверяю через официальный канал"},{ka:"პაროლს გამგზავნს ვუგზავნი",en:"I send my password to the sender",ru:"Отправляю пароль отправителю"}],1,{ka:"გადაუდებელი მოთხოვნა და პაროლის მოთხოვნა ფიშინგის ნიშნებია. შედი ოფიციალურ აპში ან საიტზე დამოუკიდებლად.",en:"Urgency and a password request are phishing warning signs. Open the official app or site independently.",ru:"Срочность и запрос пароля — признаки фишинга. Самостоятельно открой официальный сайт или приложение."}),
+A("s2","security","🔐",{ka:"ანგარიშის დაცვა",en:"Account security",ru:"Защита аккаунта"},{ka:"როგორ გააძლიერებ შენს ანგარიშს?",en:"How can you make your account more secure?",ru:"Как усилить защиту аккаунта?"},[{ka:"ყველგან ერთ პაროლს გამოვიყენებ",en:"Use the same password everywhere",ru:"Использовать один пароль везде"},{ka:"გრძელ, უნიკალურ პაროლს და მრავალფაქტორიან დაცვას ჩავრთავ",en:"Use a long, unique password and enable multi-factor authentication",ru:"Использовать длинный уникальный пароль и включить многофакторную защиту"},{ka:"პაროლს მეგობარს გავუზიარებ",en:"Share my password with a friend",ru:"Поделиться паролем с другом"}],1,{ka:"უნიკალური პაროლი და მრავალფაქტორიანი ავთენტიფიკაცია ანგარიშის დაცვას აძლიერებს.",en:"A unique password and multi-factor authentication improve account security.",ru:"Уникальный пароль и многофакторная аутентификация повышают безопасность аккаунта."}),
+A("s3","security","📶",{ka:"საჯარო Wi-Fi",en:"Public Wi-Fi",ru:"Общедоступный Wi-Fi"},{ka:"კაფეში უცნობი Wi-Fi ქსელი ჩანს. რა არის უსაფრთხო არჩევანი?",en:"You see an unfamiliar Wi-Fi network in a café. What is the safer choice?",ru:"В кафе видна незнакомая сеть Wi-Fi. Как поступить безопаснее?"},[{ka:"ნებისმიერ ქსელს დავუკავშირდები",en:"Connect to any network",ru:"Подключиться к любой сети"},{ka:"ქსელის სახელს თანამშრომელთან გადავამოწმებ და მგრძნობიარე მოქმედებებს მოვერიდები",en:"Verify the network name with staff and avoid sensitive tasks",ru:"Уточнить название сети у сотрудника и избегать важных операций"},{ka:"პაროლებს შევიყვან შესამოწმებლად",en:"Enter passwords to test it",ru:"Ввести пароли для проверки"}],1,{ka:"ყალბი Wi-Fi ქსელი მონაცემების მოპარვისთვის შეიძლება გამოიყენონ.",en:"A fake Wi-Fi network may be used to steal information.",ru:"Поддельную сеть Wi-Fi могут использовать для кражи данных."}),
+A("l1","logic","🔎",{ka:"ლოგიკური მიმდევრობა",en:"Number sequence",ru:"Числовая последовательность"},{ka:"მიმდევრობაა 2, 4, 8, 16, __. რომელი რიცხვი მოდის შემდეგ?",en:"The sequence is 2, 4, 8, 16, __. What comes next?",ru:"Последовательность: 2, 4, 8, 16, __. Какое число следующее?"},[{ka:"18",en:"18",ru:"18"},{ka:"24",en:"24",ru:"24"},{ka:"32",en:"32",ru:"32"}],2,{ka:"ყოველი შემდეგი რიცხვი წინა რიცხვის გაორმაგებით მიიღება.",en:"Each number is twice the previous one.",ru:"Каждое следующее число в два раза больше предыдущего."}),
+A("l2","logic","🧠",{ka:"სამი პირობა",en:"Three conditions",ru:"Три условия"},{ka:"კოდი ლუწია, 10-ზე მეტია და 15-ზე ნაკლებია. რომელი შეესაბამება?",en:"A number is even, greater than 10, and less than 15. Which one fits?",ru:"Число чётное, больше 10 и меньше 15. Какое подходит?"},[{ka:"12",en:"12",ru:"12"},{ka:"15",en:"15",ru:"15"},{ka:"9",en:"9",ru:"9"}],0,{ka:"12 ლუწია, 10-ზე მეტია და 15-ზე ნაკლები.",en:"12 is even, greater than 10, and less than 15.",ru:"12 — чётное число, больше 10 и меньше 15."}),
+A("l3","logic","📁",{ka:"სარეზერვო ასლი",en:"Backup copy",ru:"Резервная копия"},{ka:"ორიგინალი ფაილი და სარეზერვო ასლი ერთ მოწყობილობაზეა. რა რისკია?",en:"The original file and its backup are on the same device. What is the risk?",ru:"Оригинальный файл и резервная копия находятся на одном устройстве. В чём риск?"},[{ka:"რისკი საერთოდ არ არსებობს",en:"There is no risk",ru:"Риска нет"},{ka:"მოწყობილობის დაკარგვამ ორივე ასლი შეიძლება დააზიანოს",en:"Losing the device could affect both copies",ru:"При потере устройства можно потерять обе копии"},{ka:"სარეზერვო ასლი არასდროს გვჭირდება",en:"Backups are never needed",ru:"Резервные копии не нужны"}],1,{ka:"სარეზერვო ასლები ცალკე, უსაფრთხო ადგილასაც უნდა ინახებოდეს.",en:"Backups should also be stored separately in a secure location.",ru:"Резервные копии следует хранить отдельно в безопасном месте."}),
+A("c1","coding","⌨️",{ka:"სასწავლო ბრძანება",en:"Learning command",ru:"Учебная команда"},{ka:"ტერმინალში გინდა ხელმისაწვდომი ბრძანებების ნახვა. რას სცდი?",en:"You want to see the available commands in a terminal. What do you try?",ru:"Ты хочешь увидеть доступные команды терминала. Что введёшь?"},[{ka:"help",en:"help",ru:"help"},{ka:"steal",en:"steal",ru:"steal"},{ka:"destroy",en:"destroy",ru:"destroy"}],0,{ka:"help ხშირად ხელმისაწვდომი ბრძანებების ჩამონათვალს აჩვენებს.",en:"The help command commonly displays a list of available commands.",ru:"Команда help обычно показывает список доступных команд."}),
+A("c2","coding","💻",{ka:"პირობის შემოწმება",en:"Checking a condition",ru:"Проверка условия"},{ka:"პროგრამამ „კი“ უნდა აჩვენოს, თუ ქულა 50 ან მეტია. რომელი პირობაა სწორი?",en:"A program should display “yes” if the score is 50 or higher. Which condition is correct?",ru:"Программа должна вывести «да», если балл равен 50 или выше. Какое условие верное?"},[{ka:"score < 50",en:"score < 50",ru:"score < 50"},{ka:"score >= 50",en:"score >= 50",ru:"score >= 50"},{ka:"score == 0",en:"score == 0",ru:"score == 0"}],1,{ka:">= ნიშნავს მეტია ან ტოლია.",en:">= means greater than or equal to.",ru:">= означает «больше или равно»."}),
+A("c3","coding","🐛",{ka:"შეცდომის პოვნა",en:"Finding a bug",ru:"Поиск ошибки"},{ka:"პროგრამა არ მუშაობს. რა არის კარგი პირველი ნაბიჯი?",en:"A program is not working. What is a good first step?",ru:"Программа не работает. Какой первый шаг лучше сделать?"},[{ka:"ყველაფერი წავშალო",en:"Delete everything",ru:"Удалить всё"},{ka:"შეცდომის შეტყობინება და შესაბამისი კოდი შევამოწმო",en:"Check the error message and relevant code",ru:"Проверить сообщение об ошибке и соответствующий код"},{ka:"შემთხვევითი კოდი დავამატო",en:"Add random code",ru:"Добавить случайный код"}],1,{ka:"შეცდომის შეტყობინება ხშირად პრობლემის მიზეზის პოვნაში გვეხმარება.",en:"The error message often helps identify the cause of the problem.",ru:"Сообщение об ошибке часто помогает найти причину проблемы."}),
+A("n1","network","👣",{ka:"ციფრული კვალი",en:"Digital footprint",ru:"Цифровой след"},{ka:"საიტი გთხოვს პირად მონაცემებს, რომლებიც მომსახურებისთვის საჭირო არ ჩანს. რას იზამ?",en:"A website asks for personal data that does not seem necessary for its service. What do you do?",ru:"Сайт запрашивает личные данные, которые не нужны для услуги. Что ты сделаешь?"},[{ka:"ყველაფერს შევავსებ",en:"Fill in everything",ru:"Заполню всё"},{ka:"შევამოწმებ, რატომ სჭირდება ეს ინფორმაცია და ზედმეტს არ გავაზიარებ",en:"Check why the information is needed and avoid sharing unnecessary data",ru:"Уточню, зачем нужны данные, и не стану сообщать лишнее"},{ka:"მონაცემებს საჯაროდ გამოვაქვეყნებ",en:"Publish the data publicly",ru:"Опубликую данные открыто"}],1,{ka:"გააზიარე მხოლოდ აუცილებელი ინფორმაცია და გადაამოწმე საიტის სანდოობა.",en:"Share only necessary information and check whether the site is trustworthy.",ru:"Передавай только необходимые данные и проверяй надёжность сайта."}),
+A("n2","network","🌐",{ka:"HTTPS",en:"HTTPS",ru:"HTTPS"},{ka:"საიტის მისამართი HTTPS-ით იწყება. რას ნიშნავს ეს?",en:"A website address begins with HTTPS. What does this mean?",ru:"Адрес сайта начинается с HTTPS. Что это означает?"},[{ka:"საიტი აუცილებლად სანდოა",en:"The site is definitely trustworthy",ru:"Сайт точно надёжный"},{ka:"კავშირი დაშიფრულია, მაგრამ საიტის პატიოსნება გარანტირებული არაა",en:"The connection is encrypted, but the site's honesty is not guaranteed",ru:"Соединение зашифровано, но надёжность самого сайта не гарантирована"},{ka:"საიტზე საფრთხე შეუძლებელია",en:"There can be no danger on the site",ru:"На сайте не может быть угроз"}],1,{ka:"თაღლითურ საიტსაც შეიძლება ჰქონდეს HTTPS. შეამოწმე დომენი და გამგზავნი.",en:"A fraudulent site can also use HTTPS. Check the domain and sender.",ru:"У мошеннического сайта тоже может быть HTTPS. Проверяй домен и отправителя."}),
+A("n3","network","📂",{ka:"ფაილის გაზიარება",en:"File sharing",ru:"Общий доступ к файлу"},{ka:"გუნდს ფაილი უნდა გაუზიარო. რომელი არჩევანია უსაფრთხო?",en:"You need to share a file with your team. Which option is safer?",ru:"Нужно поделиться файлом с командой. Какой вариант безопаснее?"},[{ka:"ბმულს ყველასთვის საჯაროს გავხდი",en:"Make the link public to everyone",ru:"Открыть ссылку для всех"},{ka:"წვდომას მხოლოდ საჭირო ადამიანებს მივცემ",en:"Give access only to people who need it",ru:"Предоставить доступ только тем, кому он нужен"},{ka:"პაროლს საჯარო ბმულში ჩავწერ",en:"Put the password in the public link",ru:"Вписать пароль в общедоступную ссылку"}],1,{ka:"წვდომა მხოლოდ საჭირო ადამიანებს მიანიჭე.",en:"Grant access only to the people who need it.",ru:"Предоставляй доступ только тем, кому он действительно нужен."}),
+A("m1","missions","🕵️",{ka:"გატეხილი ანგარიში",en:"Compromised account",ru:"Взломанный аккаунт"},{ka:"ანგარიშზე უცნობი შესვლა შენიშნე. რა უნდა გააკეთო სანდო მოწყობილობიდან?",en:"You notice an unfamiliar sign-in to your account. What should you do from a trusted device?",ru:"Ты заметил незнакомый вход в аккаунт. Что нужно сделать с доверенного устройства?"},[{ka:"უგულებელვყო",en:"Ignore it",ru:"Игнорировать"},{ka:"შევცვალო პაროლი, დავასრულო უცნობი სესიები და ჩავრთო დამატებითი დაცვა",en:"Change the password, end unknown sessions, and enable extra protection",ru:"Сменить пароль, завершить неизвестные сеансы и включить дополнительную защиту"},{ka:"იგივე პაროლი სხვაგანაც გამოვიყენო",en:"Reuse the same password elsewhere",ru:"Использовать тот же пароль на других сайтах"}],1,{ka:"პაროლის შეცვლა, უცნობი სესიების დახურვა და დამატებითი დაცვა რეაგირების მნიშვნელოვანი ნაბიჯებია.",en:"Changing the password, ending unknown sessions, and enabling extra protection are important response steps.",ru:"Смена пароля, завершение неизвестных сеансов и дополнительная защита — важные шаги."}),
+A("m2","missions","💾",{ka:"უცნობი USB",en:"Unknown USB drive",ru:"Неизвестная USB-флешка"},{ka:"იპოვე უცნობი USB მოწყობილობა. რა არის უსაფრთხო არჩევანი?",en:"You find an unknown USB device. What is the safe choice?",ru:"Ты нашёл неизвестную USB-флешку. Как поступить безопасно?"},[{ka:"კომპიუტერში შევაერთო",en:"Plug it into a computer",ru:"Подключить к компьютеру"},{ka:"არ შევაერთო და პასუხისმგებელ პირს გადავცე",en:"Do not plug it in; give it to a responsible person",ru:"Не подключать и передать ответственному лицу"},{ka:"ფაილები ყველას გავუგზავნო",en:"Send its files to everyone",ru:"Отправить её файлы всем"}],1,{ka:"უცნობ USB მოწყობილობას შეიძლება მავნე პროგრამა ჰქონდეს.",en:"An unknown USB device may contain malware.",ru:"Неизвестная USB-флешка может содержать вредоносное ПО."}),
+A("m3","missions","🧪",{ka:"ფიშინგის გამოძიება",en:"Phishing investigation",ru:"Расследование фишинга"},{ka:"ელფოსტა გპირდება პრიზს და გთხოვს პაროლს უცნაური ბმულის საშუალებით. რა არის ყველაზე საეჭვო?",en:"An email promises a prize and asks for your password through an unfamiliar link. What is most suspicious?",ru:"Письмо обещает приз и просит пароль через незнакомую ссылку. Что вызывает наибольшее подозрение?"},[{ka:"მოულოდნელი პრიზი და პაროლის მოთხოვნა",en:"An unexpected prize and a password request",ru:"Неожиданный приз и запрос пароля"},{ka:"ტექსტის არსებობა",en:"The presence of text",ru:"Наличие текста"},{ka:"შეტყობინების დრო",en:"The time the message arrived",ru:"Время получения сообщения"}],0,{ka:"მოულოდნელი პრიზი, პაროლის მოთხოვნა და უცნაური ბმული ფიშინგის ნიშნებია.",en:"An unexpected prize, password request, and unfamiliar link are signs of phishing.",ru:"Неожиданный приз, запрос пароля и незнакомая ссылка — признаки фишинга."})
 ];
 
-// LOCAL DEMO PROGRESS
 let state={score:0,done:[],badges:[]};
-try{
- const saved=JSON.parse(localStorage.getItem("cyberlab_progress")||"null");
- if(saved&&Number.isFinite(saved.score)&&Array.isArray(saved.done)&&Array.isArray(saved.badges))state=saved;
-}catch(e){}
-function save(){
- try{localStorage.setItem("cyberlab_progress",JSON.stringify(state))}catch(e){}
- updateStats();
-}
-function updateStats(){
- document.getElementById("score").textContent=state.score;
- document.getElementById("completed").textContent=state.done.length;
- document.getElementById("badges").textContent=state.badges.length;
- let pct=Math.round(state.done.length/activities.length*100);
- document.getElementById("progressBar").style.width=pct+"%";
- document.getElementById("progressText").textContent=
-  `შესრულებულია ${state.done.length} / ${activities.length} მისია — ${pct}%.`;
-}
-function renderCategories(){
- document.getElementById("categories").innerHTML=categories.map(c=>{
-  let list=activities.filter(a=>a.cat===c.id);
-  let finished=list.filter(a=>state.done.includes(a.id)).length;
-  return `<article class="card">
-   <div class="icon">${c.icon}</div><h3>${c.name}</h3>
-   <p>${c.desc}</p><span class="tag">${finished}/${list.length} შესრულებულია</span>
-   <button onclick="filterMissions('${c.id}')">მისიების ნახვა →</button>
-  </article>`;
- }).join("");
-}
-function renderMissions(filter=null){
- const list=filter?activities.filter(a=>a.cat===filter):activities;
- document.getElementById("missionGrid").innerHTML=list.map(a=>{
-  const done=state.done.includes(a.id);
-  return `<article class="card">
-   <div class="icon">${a.icon}</div><h3>${a.title}</h3><p>${a.story}</p>
-   <span class="tag">${done?"✓ შესრულებულია":"სასწავლო მისია"}</span>
-   <button ${done?"disabled":""} onclick="startMission('${a.id}')">${done?"დასრულებულია":"დაწყება →"}</button>
-  </article>`;
- }).join("");
-}
-function filterMissions(id){
- renderMissions(id);
- document.getElementById("missionIntro").textContent=
-  categories.find(c=>c.id===id).name+" — აირჩიე მისია.";
- document.getElementById("missions").scrollIntoView({behavior:"smooth"});
-}
+try{const saved=JSON.parse(localStorage.getItem("cyberlab_progress")||"null");if(saved&&Number.isFinite(saved.score)&&Array.isArray(saved.done)&&Array.isArray(saved.badges))state=saved}catch(e){}
+function save(){try{localStorage.setItem("cyberlab_progress",JSON.stringify(state))}catch(e){}updateStats()}
+function updateStats(){document.getElementById("score").textContent=state.score;document.getElementById("completed").textContent=state.done.length;document.getElementById("badges").textContent=state.badges.length;let pct=Math.round(state.done.length/activities.length*100);document.getElementById("progressBar").style.width=pct+"%";document.getElementById("progressText").textContent=state.done.length?tr("progressCount").replace("{done}",state.done.length).replace("{total}",activities.length).replace("{pct}",pct):tr("noneDone")}
+function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>{let list=activities.filter(a=>a.cat===c.id),finished=list.filter(a=>state.done.includes(a.id)).length;return `<article class="card"><div class="icon">${c.icon}</div><h3>${c.name[lang]}</h3><p>${c.desc[lang]}</p><span class="tag">${finished}/${list.length} ${lang==="ka"?"შესრულებულია":lang==="ru"?"выполнено":"completed"}</span><button onclick="filterMissions('${c.id}')">${lang==="ka"?"მისიების ნახვა →":lang==="ru"?"Смотреть миссии →":"View missions →"}</button></article>`}).join("")}
+function renderMissions(filter=null){const list=filter?activities.filter(a=>a.cat===filter):activities;document.getElementById("missionGrid").innerHTML=list.map(a=>{let done=state.done.includes(a.id);return `<article class="card"><div class="icon">${a.icon}</div><h3>${a.title[lang]}</h3><p>${a.story[lang]}</p><span class="tag">${done?tr("done"):tr("trainingMission")}</span><button ${done?"disabled":""} onclick="startMission('${a.id}')">${done?tr("finished"):tr("start")}</button></article>`}).join("")}
+function filterMissions(id){renderMissions(id);document.getElementById("missionIntro").textContent=categories.find(c=>c.id===id).name[lang]+tr("filterSuffix");document.getElementById("missions").scrollIntoView({behavior:"smooth"})}
 function renderAll(){renderCategories();renderMissions();updateStats()}
-function startMission(id){
- const a=activities.find(x=>x.id===id);
- if(!a||state.done.includes(id))return;
- document.getElementById("modalContent").innerHTML=`
-  <span class="tag">MISSION IN PROGRESS</span>
-  <h2 id="modalTitle">${a.icon} ${a.title}</h2>
-  <p>${a.story}</p>
-  <div class="answers">${a.opts.map((o,i)=>
-   `<button onclick="answerMission('${a.id}',${i})">${["A","B","C"][i]}. ${o}</button>`
-  ).join("")}</div><div id="feedback"></div>`;
- openModal();
-}
-function answerMission(id,choice){
- const a=activities.find(x=>x.id===id);
- if(!a||state.done.includes(id))return;
- const ok=choice===a.correct;
- if(ok){
-  state.done.push(id);state.score+=10;
-  if(state.done.length>=3&&!state.badges.includes("starter"))state.badges.push("starter");
-  if(state.done.length===activities.length&&!state.badges.includes("master"))state.badges.push("master");
-  save();
- }
- document.getElementById("feedback").innerHTML=`
-  <div class="feedback"><strong>${ok?"✓ სწორია! +10 ქულა":"ჯერ არა — სცადე კიდევ."}</strong>
-  <p>${a.why}</p>
-  ${ok?'<button onclick="closeModal();renderAll()">გაგრძელება →</button>':
-  `<button onclick="startMission('${a.id}')">ხელახლა ცდა</button>`}</div>`;
-}
-function openModal(){document.getElementById("modalBg").style.display="flex"}
-function closeModal(){document.getElementById("modalBg").style.display="none"}
-document.getElementById("modalBg").addEventListener("click",e=>{
- if(e.target.id==="modalBg")closeModal();
-});
-function showProfile(){
- document.getElementById("modalContent").innerHTML=`
-  <h2 id="modalTitle">ჩემი პროფილი</h2>
-  <p>ეს არის ლოკალური დემო-პროფილი. ნამდვილ ანგარიშზე შესვლა ჯერ არ არის ჩართული.</p>
-  <p>ქულები: <strong>${state.score}</strong><br>შესრულებული მისიები: <strong>${state.done.length}</strong></p>
-  <p>მიღწევები: ${state.badges.length?state.badges.map(b=>b==="starter"?"პირველი 3 მისია":"ყველა მისია").join(", "):"ჯერ არ გაქვს მიღწევა."}</p>
-  <p class="muted">პროგრესი ამ ბრაუზერში ინახება. ის არ არის დაკავშირებული მომხმარებლის ონლაინ ანგარიშთან.</p>`;
- openModal();
-}
-function showPremium(){
- document.getElementById("modalContent").innerHTML=`
-  <h2 id="modalTitle">CYBER LAB PRO PREMIUM</h2>
-  <h3 style="color:var(--green)">59.99 ₾ / თვე</h3>
-  <p>ეს არის დაგეგმილი გამოწერის ფასი. გამოწერა და გადახდა ამ ვერსიაში ჯერ არ მუშაობს.</p>
-  <p>რეალური გაშვებისთვის საჭიროა უსაფრთხო ავტორიზაცია, სერვერი, გამოწერის მართვა და გადახდის პროვაიდერი.</p>
-  <p class="muted">არ შეიყვანო ბარათის მონაცემები — გადახდის ფორმა არ არსებობს.</p>`;
- openModal();
-}
-function resetProgress(){
- if(!confirm("ნამდვილად გსურს პროგრესის განულება?"))return;
- state={score:0,done:[],badges:[]};save();renderAll();
-}
+function startMission(id){const a=activities.find(x=>x.id===id);if(!a||state.done.includes(id))return;document.getElementById("modalContent").innerHTML=`<span class="tag">MISSION IN PROGRESS</span><h2 id="modalTitle">${a.icon} ${a.title[lang]}</h2><p>${a.story[lang]}</p><div class="answers">${a.opts.map((o,i)=>`<button onclick="answerMission('${a.id}',${i})">${["A","B","C"][i]}. ${o[lang]}</button>`).join("")}</div><div id="feedback"></div>`;openModal()}
+function answerMission(id,choice){const a=activities.find(x=>x.id===id);if(!a||state.done.includes(id))return;const ok=choice===a.correct;if(ok){state.done.push(id);state.score+=10;if(state.done.length>=3&&!state.badges.includes("starter"))state.badges.push("starter");if(state.done.length===activities.length&&!state.badges.includes("master"))state.badges.push("master");save()}document.getElementById("feedback").innerHTML=`<div class="feedback"><strong>${ok?tr("correct"):tr("tryAgain")}</strong><p>${a.why[lang]}</p>${ok?`<button onclick="closeModal();renderAll()">${tr("continue")}</button>`:`<button onclick="startMission('${a.id}')">${tr("retry")}</button>`}</div>`}
+function openModal(){document.getElementById("modalBg").style.display="flex"}function closeModal(){document.getElementById("modalBg").style.display="none"}
+document.getElementById("modalBg").addEventListener("click",e=>{if(e.target.id==="modalBg")closeModal()});
+function showProfile(){document.getElementById("modalContent").innerHTML=`<h2 id="modalTitle">${tr("profileTitle")}</h2><p>${tr("localProfile")}</p><p>${tr("scoreLabel")}: <strong>${state.score}</strong><br>${tr("doneLabel")}: ${state.done.length}</p><p>${tr("badgesLabel")}: ${state.badges.length?state.badges.map(b=>b==="starter"?tr("badgeStarter"):tr("badgeMaster")).join(", "):tr("noBadges")}</p><p class="muted">${tr("profileNotice")}</p>`;openModal()}
+function showPremium(){document.getElementById("modalContent").innerHTML=`<h2 id="modalTitle">${tr("premiumTitle")}</h2><h3 style="color:var(--green)">59.99 ₾ / ${lang==="ka"?"თვე":lang==="ru"?"месяц":"month"}</h3><p>${tr("premiumPrice")}</p><p>${tr("premiumSafe")}</p><p class="muted">${tr("premiumNoCard")}</p>`;openModal()}
+function resetProgress(){if(!confirm(tr("confirmReset")))return;state={score:0,done:[],badges:[]};save();renderAll()}
 
-// SAFE SIMULATED TERMINAL
-const termInput=document.getElementById("termInput");
-const termOutput=document.getElementById("termOutput");
-function runCommand(raw){
- const cmd=raw.trim().toLowerCase();
- const replies={
-  help:"ბრძანებები: help, about, score, missions, tips, clear",
-  about:"CYBER LAB PRO — სასწავლო ტერმინალი. რეალურ სისტემურ ბრძანებებს არ ასრულებს.",
-  score:()=>`ქულა: ${state.score}; შესრულებული მისიები: ${state.done.length}`,
-  missions:()=>`სულ ${activities.length} სასწავლო მისიაა. გადადი სექციაზე „მისიების ცენტრი“.`,
-  tips:"გამოიყენე უნიკალური პაროლები, ჩართე მრავალფაქტორიანი დაცვა და გადაამოწმე ბმულები."
- };
- if(cmd==="clear"){termOutput.innerHTML="";return}
- let result=replies[cmd];
- if(typeof result==="function")result=result();
- if(!result)result="უცნობი ბრძანება. ხელმისაწვდომი ბრძანებების სანახავად დაწერე help.";
- const line=document.createElement("div");
- line.textContent="guest@cyberlab:~$ "+raw;
- const response=document.createElement("div");
- response.style.color="#43ff91";response.textContent=result;
- termOutput.append(line,response);
-}
-termInput.addEventListener("keydown",e=>{
- if(e.key==="Enter"&&termInput.value.trim()){
-  runCommand(termInput.value);termInput.value="";
- }
-});
-renderAll();
+// Safe educational terminal: commands are simulated and never run on the device.
+const termInput=document.getElementById("termInput"),termOutput=document.getElementById("termOutput");
+function runCommand(raw){const cmd=raw.trim().toLowerCase();const replies={help:()=>tr("help"),about:()=>tr("about"),score:()=>tr("scoreCmd").replace("{score}",state.score).replace("{done}",state.done.length),missions:()=>tr("missionsCmd").replace("{total}",activities.length),tips:()=>tr("tips")};if(cmd==="clear"){termOutput.innerHTML="";return}let result=replies[cmd]?.();if(!result)result=tr("unknown");const line=document.createElement("div");line.textContent="guest@cyberlab:~$ "+raw;const response=document.createElement("div");response.style.color="#43ff91";response.textContent=result;termOutput.append(line,response)}
+termInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&termInput.value.trim()){runCommand(termInput.value);termInput.value=""}});
+setLanguage(lang);
 </script>
 </body>
 </html>
